@@ -1,5 +1,7 @@
 import express from "express";
 
+import "./shared/infra/typeorm";
+
 const app = express();
 
 app.get("/", (request, response) => response.json({ message: "Hello world" }));
