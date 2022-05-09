@@ -1,6 +1,6 @@
 import { Connection, createConnection, getConnectionOptions } from "typeorm";
 
-export default async (host = "database_ignite"): Promise<Connection> => {
+export default async (host = "path_empathy_database"): Promise<Connection> => {
   const defaultOptions = await getConnectionOptions();
 
   return createConnection(

@@ -1,8 +1,18 @@
+import "reflect-metadata";
+
 import express from "express";
 
-import "./shared/infra/typeorm";
+import "../../container";
+
+import createConnection from "../typeorm";
+import { router } from "./routes";
+
+createConnection();
 
 const app = express();
+
+app.use(express.json());
+app.use(router);
 
 app.get("/", (request, response) => response.json({ message: "Hello world" }));
 
