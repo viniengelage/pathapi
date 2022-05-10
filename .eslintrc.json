@@ -50,13 +50,17 @@
         }
         ],
         "import-helpers/order-imports": [
-        "warn",
-        {
-            "newlinesBetween": "always",
-            "groups": ["module", "/^@shared/", ["parent", "sibling", "index"]],
-            "alphabetize": { "order": "asc", "ignoreCase": true }
-        }
-        ],
+            "warn",
+            {
+                "newlinesBetween": "always", // new line between groups
+                "groups": [
+                    "module",
+                    "/^@/",
+                    ["parent", "sibling", "index"]
+                ],
+                "alphabetize": { "order": "asc", "ignoreCase": true }
+            }
+          ],
         "import/no-extraneous-dependencies": [
         "error",
         { "devDependencies": ["**/*.spec.js"] }

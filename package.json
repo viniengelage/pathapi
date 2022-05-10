@@ -6,8 +6,8 @@
   "author": "Vinicios Engelage",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev --transpile-only --ignore-watch node_modules --respawn src/shared/infra/http/server.ts",
-    "typeorm": "ts-node-dev ./node_modules/typeorm/cli"
+    "dev": "ts-node-dev --transpile-only --ignore-watch node_modules --respawn -r tsconfig-paths/register src/shared/infra/http/server.ts",
+    "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -33,6 +33,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "prettier": "^2.6.2",
     "ts-node-dev": "^1.1.8",
+    "tsconfig-paths": "^4.0.0",
     "typescript": "^4.6.4"
   }
 }
