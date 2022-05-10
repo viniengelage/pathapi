@@ -1,3 +1,4 @@
+import { IsEmail, MinLength } from "class-validator";
 import {
   Entity,
   PrimaryColumn,
@@ -22,6 +23,7 @@ class User {
   username: string;
 
   @Column()
+  @IsEmail({}, { message: "E-mail inválido" })
   email: string;
 
   @Column()

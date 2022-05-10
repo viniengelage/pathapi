@@ -1,8 +1,11 @@
+import { validate } from "class-validator";
 import { getRepository, Repository } from "typeorm";
 
 import { ICreateUserDTO } from "@modules/users/dtos/ICreateUserDTO";
 import { User } from "@modules/users/infra/typeorm/entities/User";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
+import { AppError } from "@shared/errors/AppError";
+import { ValidationError } from "@shared/errors/ValidationError";
 
 class UsersRepository implements IUsersRepository {
   private repository: Repository<User>;
@@ -33,6 +36,12 @@ class UsersRepository implements IUsersRepository {
       free_time,
       genre,
     });
+
+    const errors = await validate(user);
+
+    if (errors.length > 0) {
+      throw new ValidationError(errors);
+    }
 
     await this.repository.save(user);
 
