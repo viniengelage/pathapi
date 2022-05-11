@@ -22,6 +22,9 @@
     ],
     "rules": {
         "camelcase": "off",
+        "radix":"off",
+        "no-param-reassign":"off",
+        "no-useless-escape":"off",
         "prettier/prettier": "error",
         "import/no-unresolved": "error",
         "@typescript-eslint/naming-convention": [

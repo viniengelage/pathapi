@@ -1,10 +1,9 @@
-import { IsEmail, MinLength } from "class-validator";
 import {
   Entity,
-  PrimaryColumn,
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  PrimaryGeneratedColumn,
 } from "typeorm";
 import { v4 as uuidV4 } from "uuid";
 
@@ -16,14 +15,13 @@ export enum UserGenre {
 
 @Entity("users")
 class User {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn("uuid")
   id?: string;
 
   @Column()
   username: string;
 
   @Column()
-  @IsEmail({}, { message: "E-mail inválido" })
   email: string;
 
   @Column()
@@ -62,12 +60,12 @@ class User {
   @UpdateDateColumn()
   updated_at: Date;
 
-  constructor() {
-    if (!this.id) {
-      this.id = uuidV4();
-      this.points = 0;
-    }
-  }
+  // constructor() {
+  //   if (!this.id) {
+  //     this.id = uuidV4();
+  //     this.points = 0;
+  //   }
+  // }
 }
 
 export { User };

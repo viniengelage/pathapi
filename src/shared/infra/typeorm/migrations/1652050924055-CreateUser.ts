@@ -6,13 +6,24 @@ export class CreateUser1652050924055 implements MigrationInterface {
       new Table({
         name: "users",
         columns: [
-          { name: "id", type: "uuid", isPrimary: true },
-          { name: "username", type: "varchar" },
-          { name: "email", type: "varchar" },
+          {
+            name: "id",
+            type: "varchar",
+            isPrimary: true,
+            generationStrategy: "uuid",
+            default: "uuid_generate_v4()",
+          },
+          { name: "username", type: "varchar", isUnique: true },
+          { name: "email", type: "varchar", isUnique: true },
           { name: "password", type: "varchar" },
           { name: "name", type: "varchar" },
           { name: "birthday", type: "date", isNullable: true },
-          { name: "cellphone", type: "varchar", isNullable: true },
+          {
+            name: "cellphone",
+            type: "varchar",
+            isNullable: true,
+            isUnique: true,
+          },
           { name: "points", type: "numeric", isNullable: true, default: 0 },
           { name: "free_time", type: "time", isNullable: true },
           {
