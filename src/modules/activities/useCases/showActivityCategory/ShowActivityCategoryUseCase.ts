@@ -12,7 +12,11 @@ class ShowActivityCategoryUseCase {
   ) {}
 
   async execute(id: string): Promise<ActivityCategory> {
-    const activityCategory = this.activitiesCategoriesRepository.findById(id);
+    const activityCategory = await this.activitiesCategoriesRepository.findById(
+      id
+    );
+
+    console.log(activityCategory);
 
     if (!activityCategory) {
       throw new AppError("Activity category not found", 404);

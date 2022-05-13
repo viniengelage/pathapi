@@ -1,4 +1,11 @@
-import { AfterLoad, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  AfterLoad,
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from "typeorm";
 
 @Entity("activities_categories")
 class ActivityCategory {
@@ -15,6 +22,12 @@ class ActivityCategory {
 
   @Column()
   icon: string;
+
+  @CreateDateColumn()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  updated_at: Date;
 
   @AfterLoad()
   getIconUrl() {
