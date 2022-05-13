@@ -33,23 +33,18 @@ class CreateUserUseCase {
     );
 
     if (emailAlreadyExists) {
-      throw new ValidationError([{ email: "Esse email já foi usado" }]);
+      throw new ValidationError({ email: "Esse email já foi usado" });
     }
 
     if (usernameAlreadyExists) {
-      throw new ValidationError([{ username: "Nome de usuário já utilizado" }]);
+      throw new ValidationError({ username: "Nome de usuário já utilizado" });
     }
-
-    const isValidEmail = this.validationProvider.validateEmail(email);
-
-    if (!isValidEmail)
-      throw new ValidationError([{ email: "E-mail inválido" }]);
 
     if (cellphone) {
       const isValidCellphone = this.validationProvider.validatePhone(cellphone);
 
       if (!isValidCellphone)
-        throw new ValidationError([{ cellphone: "Telefone inválido" }]);
+        throw new ValidationError({ cellphone: "Telefone inválido" });
     }
 
     const encryptedPassword = await hash(password, 8);

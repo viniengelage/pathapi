@@ -47,6 +47,9 @@ class User {
   @Column()
   points?: number;
 
+  @Column()
+  avatar: string;
+
   @Column({
     type: "enum",
     enum: UserGenre,

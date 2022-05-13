@@ -17,7 +17,7 @@ export class CreateUser1652050924055 implements MigrationInterface {
           { name: "email", type: "varchar", isUnique: true },
           { name: "password", type: "varchar" },
           { name: "name", type: "varchar" },
-          { name: "birthday", type: "date", isNullable: true },
+          { name: "birthday", type: "date" },
           {
             name: "cellphone",
             type: "varchar",
@@ -26,6 +26,7 @@ export class CreateUser1652050924055 implements MigrationInterface {
           },
           { name: "points", type: "numeric", isNullable: true, default: 0 },
           { name: "free_time", type: "time", isNullable: true },
+          { name: "avatar", type: "varchar", isNullable: true },
           {
             name: "genre",
             type: "enum",

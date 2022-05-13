@@ -2,8 +2,7 @@ import "reflect-metadata";
 import "express-async-errors";
 
 import express, { NextFunction, Request, Response } from "express";
-
-import "../../container";
+import { setLocale } from "yup";
 
 import { AppError } from "@shared/errors/AppError";
 import { ValidationError } from "@shared/errors/ValidationError";
@@ -11,7 +10,18 @@ import { ValidationError } from "@shared/errors/ValidationError";
 import createConnection from "../typeorm";
 import { router } from "./routes";
 
+import "../../container";
+
 createConnection();
+
+setLocale({
+  string: {
+    email: "Digite um e-mail válido",
+  },
+  mixed: {
+    required: "É um campo necessário",
+  },
+});
 
 const app = express();
 
@@ -28,7 +38,10 @@ app.use(
     }
 
     if (err instanceof ValidationError) {
-      return response.status(err.statusCode).json(err.errors);
+      return response.status(err.statusCode).json({
+        status: "Validation error",
+        errors: err.errors,
+      });
     }
 
     return response.status(500).json({
