@@ -4,6 +4,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   PrimaryGeneratedColumn,
+  AfterLoad,
 } from "typeorm";
 
 export enum UserGenre {
@@ -14,6 +15,8 @@ export enum UserGenre {
 
 @Entity("users")
 class User {
+  private avatar_url: string;
+
   @PrimaryGeneratedColumn("uuid")
   id?: string;
 
@@ -61,6 +64,13 @@ class User {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @AfterLoad()
+  getIconUrl() {
+    if (this.avatar) {
+      this.avatar_url = `http://localhost:3333/users/me/avatar/${this.avatar}`;
+    }
+  }
 }
 
 export { User };

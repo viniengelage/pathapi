@@ -1,7 +1,8 @@
 import { inject, injectable } from "tsyringe";
 
-import { ICreateActivityCategoryDTO } from "../dtos/ICreateActivityCategoryDTO";
-import { IActivitiesCategoriesRepository } from "../repositories/IActivitiesCategoriesRepository";
+import { ICreateActivityCategoryDTO } from "@modules/activities/dtos/ICreateActivityCategoryDTO";
+import { IActivitiesCategoriesRepository } from "@modules/activities/repositories/IActivitiesCategoriesRepository";
+import { ValidationError } from "@shared/errors/ValidationError";
 
 @injectable()
 class CreateActivityCategoryUseCase {
@@ -11,7 +12,12 @@ class CreateActivityCategoryUseCase {
   ) {}
 
   async execute({ name, description, icon }: ICreateActivityCategoryDTO) {
-    console.log("here");
+    const activityCategoryExists =
+      await this.activitiesCategoriesRepository.findByName(name);
+
+    if (activityCategoryExists) {
+      throw new ValidationError({ name: "Nome já utilizado" });
+    }
 
     const activityCategory = await this.activitiesCategoriesRepository.create({
       name,
