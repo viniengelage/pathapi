@@ -5,7 +5,6 @@ import {
   UpdateDateColumn,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { v4 as uuidV4 } from "uuid";
 
 export enum UserGenre {
   MALE = "male",
@@ -62,13 +61,6 @@ class User {
 
   @UpdateDateColumn()
   updated_at: Date;
-
-  // constructor() {
-  //   if (!this.id) {
-  //     this.id = uuidV4();
-  //     this.points = 0;
-  //   }
-  // }
 }
 
 export { User };
