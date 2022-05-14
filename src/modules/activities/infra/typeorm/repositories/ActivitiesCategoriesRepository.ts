@@ -37,8 +37,6 @@ class ActivitiesCategoriesRepository
     description,
     icon,
   }: IUpdateActivityCategoryDTO): Promise<ActivityCategory> {
-    console.log("hey", icon);
-
     await this.repository.update(id, {
       name,
       description,

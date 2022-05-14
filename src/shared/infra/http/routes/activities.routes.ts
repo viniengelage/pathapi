@@ -4,11 +4,15 @@ import multer from "multer";
 import uploadConfig from "@config/upload";
 import { CreateActivityController } from "@modules/activities/useCases/createActivity/CreateActivityController";
 import { CreateActivityCategoryController } from "@modules/activities/useCases/createActivityCategory/CreateActivityCategoryController";
-import { ShowActivitiesCategoryController } from "@modules/activities/useCases/showActivitiesCategories/ShowActivitiesCategoryController";
+import { DeleteActivityController } from "@modules/activities/useCases/deleteActivity/DeleteActivityController";
+import { ListActivitiesController } from "@modules/activities/useCases/listActivities/ListActivitiesController";
+import { ListActivitiesCategoryController } from "@modules/activities/useCases/listActivitiesCategories/ListActivitiesCategoryController";
 import { ShowActivityController } from "@modules/activities/useCases/showActivity/ShowActivityController";
 import { ShowActivityCategoryController } from "@modules/activities/useCases/showActivityCategory/ShowActivityCategoryController";
 import { ShowActivityIconController } from "@modules/activities/useCases/showActivityIcon/ShowActivityIconController";
+import { UpdateActivityController } from "@modules/activities/useCases/updateActivity/UpdateActivityController";
 import { UpdateActivityCategoryController } from "@modules/activities/useCases/updateActivityCategory/UpdateActivityCategoryController";
+import { UpdateActivityIconController } from "@modules/activities/useCases/updateActivityIcon/UpdateActivityIconController";
 
 const activitiesRoutes = Router();
 
@@ -18,11 +22,16 @@ const createActivityCategoryController = new CreateActivityCategoryController();
 const showActivityCategoryController = new ShowActivityCategoryController();
 const showActivityIconController = new ShowActivityIconController();
 const updateActivityCategoryController = new UpdateActivityCategoryController();
-const showActivitiesCategoriesController =
-  new ShowActivitiesCategoryController();
+const listActivitiesCategoriesController =
+  new ListActivitiesCategoryController();
+const updateActivityCategoryIconController = new UpdateActivityIconController();
 
 const createActivityController = new CreateActivityController();
 const showActivityController = new ShowActivityController();
+const listActivitiesController = new ListActivitiesController();
+const updatedActivityController = new UpdateActivityController();
+const deleteActivityController = new DeleteActivityController();
+const updateActivityIconController = new UpdateActivityIconController();
 
 activitiesRoutes.get("/icons/:filename", showActivityIconController.handle);
 
@@ -32,9 +41,19 @@ activitiesRoutes.post(
   createActivityController.handle
 );
 
-activitiesRoutes.get("/categories", showActivitiesCategoriesController.handle);
+activitiesRoutes.get("/", listActivitiesController.handle);
+
+activitiesRoutes.get("/categories", listActivitiesCategoriesController.handle);
 
 activitiesRoutes.get("/:id", showActivityController.handle);
+activitiesRoutes.put("/:id", updatedActivityController.handle);
+activitiesRoutes.delete("/:id", deleteActivityController.handle);
+
+activitiesRoutes.patch(
+  "/:id/icon",
+  uploadIcon.single("icon"),
+  updateActivityIconController.handle
+);
 
 activitiesRoutes.post(
   "/categories",
@@ -48,5 +67,10 @@ activitiesRoutes.put(
 );
 
 activitiesRoutes.get("/categories/:id", showActivityCategoryController.handle);
+activitiesRoutes.patch(
+  "/categories/:id/icon",
+  uploadIcon.single("icon"),
+  updateActivityCategoryIconController.handle
+);
 
 export { activitiesRoutes };

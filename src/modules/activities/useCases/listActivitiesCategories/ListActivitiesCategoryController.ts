@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
-import { ShowActivitiesCategoriesUseCase } from "./ShowActivitiesCategoriesUseCase";
+import { ListActivitiesCategoriesUseCase } from "./ListActivitiesCategoriesUseCase";
 
-class ShowActivitiesCategoryController {
+class ListActivitiesCategoryController {
   async handle(request: Request, response: Response): Promise<Response> {
     const showActivitiesCategoriesUseCase = container.resolve(
-      ShowActivitiesCategoriesUseCase
+      ListActivitiesCategoriesUseCase
     );
 
     const activitiesCategories =
@@ -16,4 +16,4 @@ class ShowActivitiesCategoryController {
   }
 }
 
-export { ShowActivitiesCategoryController };
+export { ListActivitiesCategoryController };

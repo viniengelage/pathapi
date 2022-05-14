@@ -1,6 +1,7 @@
 import { getRepository, Repository } from "typeorm";
 
 import { ICreateActivityDTO } from "@modules/activities/dtos/ICreateActivityDTO";
+import { IUpdateActivityDTO } from "@modules/activities/dtos/IUpdateActivityDTO";
 import { IActivitiesRepository } from "@modules/activities/repositories/IActivitiesRepository";
 
 import { Activity } from "../entities/Activity";
@@ -30,10 +31,45 @@ class ActivitiesRepository implements IActivitiesRepository {
     return activity;
   }
 
+  async update({
+    id,
+    name,
+    description,
+    activitiy_category_id,
+    icon,
+  }: IUpdateActivityDTO): Promise<Activity> {
+    await this.repository.update(id, {
+      name,
+      description,
+      activitiy_category_id,
+      icon,
+    });
+
+    const updatedActivity = await this.repository.findOne(id);
+
+    return updatedActivity;
+  }
+
+  async delete(id: string): Promise<void> {
+    await this.repository.delete(id);
+  }
+
   async findById(id: string): Promise<Activity> {
     const activitiy = await this.repository.findOne(id, {
       relations: ["activitiy_category"],
     });
+
+    return activitiy;
+  }
+
+  async findAll(): Promise<Activity[]> {
+    const listActivities = await this.repository.find();
+
+    return listActivities;
+  }
+
+  async findByName(name: string): Promise<Activity> {
+    const activitiy = await this.repository.findOne({ name });
 
     return activitiy;
   }

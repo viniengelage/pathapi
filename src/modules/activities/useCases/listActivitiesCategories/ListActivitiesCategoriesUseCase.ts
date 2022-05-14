@@ -3,7 +3,7 @@ import { inject, injectable } from "tsyringe";
 import { IActivitiesCategoriesRepository } from "@modules/activities/repositories/IActivitiesCategoriesRepository";
 
 @injectable()
-class ShowActivitiesCategoriesUseCase {
+class ListActivitiesCategoriesUseCase {
   constructor(
     @inject("ActivitiesCategoriesRepository")
     private activitiesCategoriesRepository: IActivitiesCategoriesRepository
@@ -17,4 +17,4 @@ class ShowActivitiesCategoriesUseCase {
   }
 }
 
-export { ShowActivitiesCategoriesUseCase };
+export { ListActivitiesCategoriesUseCase };
