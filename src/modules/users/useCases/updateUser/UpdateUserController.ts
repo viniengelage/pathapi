@@ -24,7 +24,7 @@ class UpdateUserController {
     };
 
     const schema = Yup.object().shape({
-      name: Yup.string().required(),
+      name: Yup.string().optional(),
       birthday: Yup.date().optional().typeError("Digite uma data válida"),
       free_time: Yup.string().optional(),
       genre: Yup.string().oneOf(["male", "female", "other"]).optional(),

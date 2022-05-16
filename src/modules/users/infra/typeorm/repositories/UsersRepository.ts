@@ -48,17 +48,20 @@ class UsersRepository implements IUsersRepository {
     genre,
     free_time,
     avatar,
+    activities,
   }: IUpdateUserDTO): Promise<User> {
-    await this.repository.update(id, {
+    await this.repository.save({
+      id,
       name,
       birthday,
       cellphone,
       genre,
       free_time,
       avatar,
+      activities,
     });
 
-    const updatedUser = this.repository.findOne(id);
+    const updatedUser = await this.repository.findOne(id);
 
     return updatedUser;
   }
@@ -68,7 +71,9 @@ class UsersRepository implements IUsersRepository {
   }
 
   async findById(id: string): Promise<User> {
-    const user = this.repository.findOne(id);
+    const user = this.repository.findOne(id, {
+      relations: ["activities"],
+    });
 
     return user;
   }

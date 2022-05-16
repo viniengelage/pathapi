@@ -8,7 +8,7 @@ export class CreateActivity1652477049777 implements MigrationInterface {
         columns: [
           {
             name: "id",
-            type: "varchar",
+            type: "uuid",
             isPrimary: true,
             generationStrategy: "uuid",
             default: "uuid_generate_v4()",
@@ -17,7 +17,7 @@ export class CreateActivity1652477049777 implements MigrationInterface {
           { name: "description", type: "varchar", isNullable: true },
           {
             name: "activitiy_category_id",
-            type: "varchar",
+            type: "uuid",
             isNullable: true,
           },
           { name: "icon", type: "varchar" },

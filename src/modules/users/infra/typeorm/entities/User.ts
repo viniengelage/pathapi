@@ -5,7 +5,11 @@ import {
   UpdateDateColumn,
   PrimaryGeneratedColumn,
   AfterLoad,
+  ManyToMany,
+  JoinTable,
 } from "typeorm";
+
+import { Activity } from "@modules/activities/infra/typeorm/entities/Activity";
 
 export enum UserGenre {
   MALE = "male",
@@ -58,6 +62,14 @@ class User {
     default: UserGenre.MALE,
   })
   genre: "male" | "female" | "other";
+
+  @ManyToMany(() => Activity)
+  @JoinTable({
+    name: "users_activities",
+    joinColumns: [{ name: "user_id" }],
+    inverseJoinColumns: [{ name: "activity_id" }],
+  })
+  activities: Activity[];
 
   @CreateDateColumn()
   created_at: Date;

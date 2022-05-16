@@ -8,7 +8,7 @@ export class CreateUser1652050924055 implements MigrationInterface {
         columns: [
           {
             name: "id",
-            type: "varchar",
+            type: "uuid",
             isPrimary: true,
             generationStrategy: "uuid",
             default: "uuid_generate_v4()",
@@ -24,7 +24,7 @@ export class CreateUser1652050924055 implements MigrationInterface {
             isNullable: true,
             isUnique: true,
           },
-          { name: "points", type: "numeric", isNullable: true, default: 0 },
+          { name: "points", type: "integer", isNullable: true, default: 0 },
           { name: "free_time", type: "time", isNullable: true },
           { name: "avatar", type: "varchar", isNullable: true },
           {

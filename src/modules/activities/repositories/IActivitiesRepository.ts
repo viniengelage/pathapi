@@ -9,6 +9,7 @@ interface IActivitiesRepository {
   findById(id: string): Promise<Activity>;
   findAll(): Promise<Activity[]>;
   findByName(name: string): Promise<Activity>;
+  findByIds(ids: string[]): Promise<Activity[]>;
 }
 
 export { IActivitiesRepository };

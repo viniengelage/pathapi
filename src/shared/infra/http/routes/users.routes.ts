@@ -7,6 +7,7 @@ import { ListUsersController } from "@modules/users/useCases/listUsers/ListUsers
 import { ShowUserController } from "@modules/users/useCases/showUser/ShowUserController";
 import { ShowUserAvatarController } from "@modules/users/useCases/showUserAvatar/ShowUserAvatarController";
 import { UpdateUserController } from "@modules/users/useCases/updateUser/UpdateUserController";
+import { UpdateUserActivityController } from "@modules/users/useCases/updateUserActivity/UpdateUserActivityController";
 import { UpdateUserAvatarController } from "@modules/users/useCases/updateUserAvatar/UpdateUserAvatarController";
 import { ensureAuthenticated } from "@shared/infra/middlewares/ensureAuthenticated";
 
@@ -23,6 +24,7 @@ const deleteUserController = new DeleteUserController();
 const showUserController = new ShowUserController();
 const updateUserAvatarController = new UpdateUserAvatarController();
 const showUserAvatarController = new ShowUserAvatarController();
+const updateUserActivityController = new UpdateUserActivityController();
 
 usersRouter.post("/", createUserController.handle);
 usersRouter.get("/", listUsersController.handle);
@@ -38,6 +40,13 @@ usersRouter.patch(
   uploadAvatar.single("avatar"),
   updateUserAvatarController.handle
 );
+
+usersRouter.patch(
+  "/me/activities",
+  ensureAuthenticated,
+  updateUserActivityController.handle
+);
+
 usersRouter.put("/", ensureAuthenticated, updateUserController.handle);
 usersRouter.delete("/", ensureAuthenticated, deleteUserController.handle);
 

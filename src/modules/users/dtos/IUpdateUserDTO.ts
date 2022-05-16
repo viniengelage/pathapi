@@ -1,3 +1,5 @@
+import { Activity } from "@modules/activities/infra/typeorm/entities/Activity";
+
 interface IUpdateUserDTO {
   id?: string;
   username?: string;
@@ -9,6 +11,7 @@ interface IUpdateUserDTO {
   cellphone: string;
   genre: "male" | "female" | "other";
   avatar?: string;
+  activities?: Activity[];
 }
 
 export { IUpdateUserDTO };

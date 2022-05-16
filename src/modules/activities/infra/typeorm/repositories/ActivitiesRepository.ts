@@ -38,7 +38,8 @@ class ActivitiesRepository implements IActivitiesRepository {
     activitiy_category_id,
     icon,
   }: IUpdateActivityDTO): Promise<Activity> {
-    await this.repository.update(id, {
+    await this.repository.save({
+      id,
       name,
       description,
       activitiy_category_id,
@@ -72,6 +73,14 @@ class ActivitiesRepository implements IActivitiesRepository {
     const activitiy = await this.repository.findOne({ name });
 
     return activitiy;
+  }
+
+  async findByIds(ids: string[]): Promise<Activity[]> {
+    console.log(ids);
+
+    const activities = await this.repository.findByIds(ids);
+
+    return activities;
   }
 }
 
