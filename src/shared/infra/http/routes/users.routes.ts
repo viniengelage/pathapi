@@ -10,14 +10,12 @@ import { UpdateUserController } from "@modules/users/useCases/updateUser/UpdateU
 import { UpdateUserActivityController } from "@modules/users/useCases/updateUserActivity/UpdateUserActivityController";
 import { UpdateUserAvatarController } from "@modules/users/useCases/updateUserAvatar/UpdateUserAvatarController";
 import { ensureAuthenticated } from "@shared/infra/middlewares/ensureAuthenticated";
-
-import { CreateUserController } from "../../../../modules/users/useCases/createUser/CreateUserController";
+import { is } from "@shared/infra/middlewares/permission";
 
 const usersRouter = Router();
 
 const uploadAvatar = multer(uploadConfig.upload("./tmp/avatar"));
 
-const createUserController = new CreateUserController();
 const listUsersController = new ListUsersController();
 const updateUserController = new UpdateUserController();
 const deleteUserController = new DeleteUserController();
@@ -26,14 +24,21 @@ const updateUserAvatarController = new UpdateUserAvatarController();
 const showUserAvatarController = new ShowUserAvatarController();
 const updateUserActivityController = new UpdateUserActivityController();
 
-usersRouter.post("/", createUserController.handle);
-usersRouter.get("/", listUsersController.handle);
+usersRouter.get(
+  "/",
+  ensureAuthenticated,
+  is("admin"),
+  listUsersController.handle
+);
+
 usersRouter.get("/me", ensureAuthenticated, showUserController.handle);
+
 usersRouter.get(
   "/me/avatar",
   ensureAuthenticated,
   showUserAvatarController.handle
 );
+
 usersRouter.patch(
   "/me/avatar",
   ensureAuthenticated,
@@ -48,6 +53,7 @@ usersRouter.patch(
 );
 
 usersRouter.put("/", ensureAuthenticated, updateUserController.handle);
+
 usersRouter.delete("/", ensureAuthenticated, deleteUserController.handle);
 
 export { usersRouter };

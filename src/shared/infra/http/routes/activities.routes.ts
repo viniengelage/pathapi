@@ -35,10 +35,14 @@ const updatedActivityController = new UpdateActivityController();
 const deleteActivityController = new DeleteActivityController();
 const updateActivityIconController = new UpdateActivityIconController();
 
+activitiesRoutes.get("/categories", listActivitiesCategoriesController.handle);
+activitiesRoutes.get("/categories/:id", showActivityCategoryController.handle);
+activitiesRoutes.get("/", listActivitiesController.handle);
+activitiesRoutes.get("/:id", showActivityController.handle);
+activitiesRoutes.get("/icons/:filename", showActivityIconController.handle);
+
 activitiesRoutes.use(ensureAuthenticated);
 activitiesRoutes.use(is("admin"));
-
-activitiesRoutes.get("/icons/:filename", showActivityIconController.handle);
 
 activitiesRoutes.post(
   "/",
@@ -46,12 +50,8 @@ activitiesRoutes.post(
   createActivityController.handle
 );
 
-activitiesRoutes.get("/", listActivitiesController.handle);
-
-activitiesRoutes.get("/categories", listActivitiesCategoriesController.handle);
-
-activitiesRoutes.get("/:id", showActivityController.handle);
 activitiesRoutes.put("/:id", updatedActivityController.handle);
+
 activitiesRoutes.delete("/:id", deleteActivityController.handle);
 
 activitiesRoutes.patch(
@@ -71,7 +71,6 @@ activitiesRoutes.put(
   updateActivityCategoryController.handle
 );
 
-activitiesRoutes.get("/categories/:id", showActivityCategoryController.handle);
 activitiesRoutes.patch(
   "/categories/:id/icon",
   uploadIcon.single("icon"),
