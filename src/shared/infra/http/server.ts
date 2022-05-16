@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import "express-async-errors";
-
+import cors from "cors";
+import dotenv from "dotenv";
 import express, { NextFunction, Request, Response } from "express";
 import { setLocale } from "yup";
 
@@ -11,6 +12,8 @@ import createConnection from "../typeorm";
 import { router } from "./routes";
 
 import "../../container";
+
+dotenv.config();
 
 createConnection();
 
@@ -26,6 +29,9 @@ setLocale({
 const app = express();
 
 app.use(express.json());
+
+app.use(cors());
+
 app.use(router);
 
 app.use(

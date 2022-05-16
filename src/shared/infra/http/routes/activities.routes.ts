@@ -13,6 +13,8 @@ import { ShowActivityIconController } from "@modules/activities/useCases/showAct
 import { UpdateActivityController } from "@modules/activities/useCases/updateActivity/UpdateActivityController";
 import { UpdateActivityCategoryController } from "@modules/activities/useCases/updateActivityCategory/UpdateActivityCategoryController";
 import { UpdateActivityIconController } from "@modules/activities/useCases/updateActivityIcon/UpdateActivityIconController";
+import { ensureAuthenticated } from "@shared/infra/middlewares/ensureAuthenticated";
+import { is } from "@shared/infra/middlewares/permission";
 
 const activitiesRoutes = Router();
 
@@ -32,6 +34,9 @@ const listActivitiesController = new ListActivitiesController();
 const updatedActivityController = new UpdateActivityController();
 const deleteActivityController = new DeleteActivityController();
 const updateActivityIconController = new UpdateActivityIconController();
+
+activitiesRoutes.use(ensureAuthenticated);
+activitiesRoutes.use(is("admin"));
 
 activitiesRoutes.get("/icons/:filename", showActivityIconController.handle);
 

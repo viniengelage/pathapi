@@ -17,6 +17,12 @@ export enum UserGenre {
   OTHER = "other",
 }
 
+export enum UserRole {
+  ADMIN = "admin",
+  CUSTOMER = "customer",
+  PROFESSIONAL = "professional",
+}
+
 @Entity("users")
 class User {
   private avatar_url: string;
@@ -62,6 +68,13 @@ class User {
     default: UserGenre.MALE,
   })
   genre: "male" | "female" | "other";
+
+  @Column({
+    type: "enum",
+    enum: UserRole,
+    default: UserRole.CUSTOMER,
+  })
+  role: "customer" | "admin" | "professional";
 
   @ManyToMany(() => Activity)
   @JoinTable({

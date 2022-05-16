@@ -35,6 +35,13 @@ export class CreateUser1652050924055 implements MigrationInterface {
             default: `'male'`,
           },
           {
+            name: "role",
+            type: "enum",
+            enum: ["customer", "admin", "professional"],
+            enumName: "roleEnum",
+            default: `'customer'`,
+          },
+          {
             name: "created_at",
             type: "timestamp",
             default: "now()",
