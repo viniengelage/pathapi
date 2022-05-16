@@ -93,7 +93,7 @@ class User {
   @AfterLoad()
   getIconUrl() {
     if (this.avatar) {
-      this.avatar_url = `http://localhost:3333/users/me/avatar/${this.avatar}`;
+      this.avatar_url = `${process.env.APP_HOST}:${process.env.APP_PORT}/users/me/avatar/${this.avatar}`;
     }
   }
 }

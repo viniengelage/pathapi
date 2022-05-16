@@ -34,7 +34,7 @@ class Activity {
 
   @AfterLoad()
   private getUrl() {
-    this.icon_url = `http://localhost:3333/activities/icons/${this.icon}`;
+    this.icon_url = `${process.env.APP_HOST}:${process.env.APP_PORT}/activities/icons/${this.icon}`;
   }
 }
 
