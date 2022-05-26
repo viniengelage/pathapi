@@ -18,7 +18,7 @@ class CreateActivityUseCase {
     name,
     description,
     icon,
-    activitiy_category_id,
+    activity_category_id,
   }: ICreateActivityDTO) {
     const activityExists = await this.activitesRepository.findByName(name);
 
@@ -27,11 +27,11 @@ class CreateActivityUseCase {
     }
 
     const activityCategoryExists =
-      await this.activitiesCategoriesRepository.findById(activitiy_category_id);
+      await this.activitiesCategoriesRepository.findById(activity_category_id);
 
     if (!activityCategoryExists) {
       throw new ValidationError({
-        activitiy_category_id: "Categoria não encontrada",
+        activity_category_id: "Categoria não encontrada",
       });
     }
 
@@ -39,7 +39,7 @@ class CreateActivityUseCase {
       name,
       description,
       icon,
-      activitiy_category_id,
+      activity_category_id,
     });
 
     return activity;

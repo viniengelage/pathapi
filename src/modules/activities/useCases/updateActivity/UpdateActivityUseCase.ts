@@ -19,7 +19,7 @@ class UpdateActivityUseCase {
     id,
     name,
     description,
-    activitiy_category_id,
+    activity_category_id,
   }: IUpdateActivityDTO) {
     const activitiy = await this.activitiesRepository.findById(id);
 
@@ -36,7 +36,7 @@ class UpdateActivityUseCase {
     }
 
     const activityCategoryExists =
-      await this.activitiesCategoriesRepository.findById(activitiy_category_id);
+      await this.activitiesCategoriesRepository.findById(activity_category_id);
 
     if (!activityCategoryExists) {
       throw new AppError("Categoria de atividade não encontrada");
@@ -46,8 +46,8 @@ class UpdateActivityUseCase {
       id,
       name: name || activitiy.name,
       description: description || activitiy.description,
-      activitiy_category_id:
-        activitiy_category_id || activitiy.activitiy_category_id,
+      activity_category_id:
+        activity_category_id || activitiy.activity_category_id,
     });
 
     return updatedActivity;

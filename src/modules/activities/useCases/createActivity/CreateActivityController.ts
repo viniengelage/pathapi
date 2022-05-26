@@ -9,20 +9,20 @@ import { CreateActivityUseCase } from "./CreateActivityUseCase";
 
 class CreateActivityController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { name, description, activitiy_category_id } = request.body;
+    const { name, description, activity_category_id } = request.body;
     const icon = request.file.filename;
 
     const activity = {
       name,
       description,
-      activitiy_category_id,
+      activity_category_id,
       icon,
     };
 
     const schema = Yup.object().shape({
       name: Yup.string().required(),
       description: Yup.string().optional(),
-      activitiy_category_id: Yup.string().required(),
+      activity_category_id: Yup.string().required(),
       icon: Yup.string().required(),
     });
 

@@ -13,11 +13,10 @@ export class CreateUser1652050924055 implements MigrationInterface {
             generationStrategy: "uuid",
             default: "uuid_generate_v4()",
           },
-          { name: "username", type: "varchar", isUnique: true },
           { name: "email", type: "varchar", isUnique: true },
           { name: "password", type: "varchar" },
           { name: "name", type: "varchar" },
-          { name: "birthday", type: "date" },
+          { name: "birthday", type: "date", isNullable: true },
           {
             name: "cellphone",
             type: "varchar",

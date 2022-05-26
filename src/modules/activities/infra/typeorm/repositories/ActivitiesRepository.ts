@@ -1,4 +1,4 @@
-import { getRepository, Repository } from "typeorm";
+import { getRepository, Repository, In } from "typeorm";
 
 import { ICreateActivityDTO } from "@modules/activities/dtos/ICreateActivityDTO";
 import { IUpdateActivityDTO } from "@modules/activities/dtos/IUpdateActivityDTO";
@@ -17,12 +17,12 @@ class ActivitiesRepository implements IActivitiesRepository {
     name,
     description,
     icon,
-    activitiy_category_id,
+    activity_category_id,
   }: ICreateActivityDTO): Promise<Activity> {
     const activity = this.repository.create({
       name,
       description,
-      activitiy_category_id,
+      activity_category_id,
       icon,
     });
 
@@ -35,14 +35,14 @@ class ActivitiesRepository implements IActivitiesRepository {
     id,
     name,
     description,
-    activitiy_category_id,
+    activity_category_id,
     icon,
   }: IUpdateActivityDTO): Promise<Activity> {
     await this.repository.save({
       id,
       name,
       description,
-      activitiy_category_id,
+      activity_category_id,
       icon,
     });
 
@@ -57,7 +57,7 @@ class ActivitiesRepository implements IActivitiesRepository {
 
   async findById(id: string): Promise<Activity> {
     const activitiy = await this.repository.findOne(id, {
-      relations: ["activitiy_category"],
+      relations: ["activity_category_id"],
     });
 
     return activitiy;
@@ -76,9 +76,15 @@ class ActivitiesRepository implements IActivitiesRepository {
   }
 
   async findByIds(ids: string[]): Promise<Activity[]> {
-    console.log(ids);
-
     const activities = await this.repository.findByIds(ids);
+
+    return activities;
+  }
+
+  async findByCategoriesIds(ids: string[]): Promise<Activity[]> {
+    const activities = await this.repository.find({
+      activity_category_id: In(ids),
+    });
 
     return activities;
   }

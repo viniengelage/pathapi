@@ -16,7 +16,7 @@ export class CreateActivity1652477049777 implements MigrationInterface {
           { name: "name", type: "varchar" },
           { name: "description", type: "varchar", isNullable: true },
           {
-            name: "activitiy_category_id",
+            name: "activity_category_id",
             type: "uuid",
             isNullable: true,
           },
@@ -37,7 +37,7 @@ export class CreateActivity1652477049777 implements MigrationInterface {
             name: "FKCategoryActivies",
             referencedTableName: "activities_categories",
             referencedColumnNames: ["id"],
-            columnNames: ["activitiy_category_id"],
+            columnNames: ["activity_category_id"],
             onDelete: "SET NULL",
             onUpdate: "SET NULL",
           },

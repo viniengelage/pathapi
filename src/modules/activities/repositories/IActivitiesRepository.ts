@@ -10,6 +10,7 @@ interface IActivitiesRepository {
   findAll(): Promise<Activity[]>;
   findByName(name: string): Promise<Activity>;
   findByIds(ids: string[]): Promise<Activity[]>;
+  findByCategoriesIds(ids: string[]): Promise<Activity[]>;
 }
 
 export { IActivitiesRepository };

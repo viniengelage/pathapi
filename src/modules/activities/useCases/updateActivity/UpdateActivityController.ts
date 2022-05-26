@@ -6,7 +6,7 @@ import { UpdateActivityUseCase } from "./UpdateActivityUseCase";
 class UpdateActivityController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
-    const { name, description, activitiy_category_id } = request.body;
+    const { name, description, activity_category_id } = request.body;
 
     const updateActivityUseCase = container.resolve(UpdateActivityUseCase);
 
@@ -14,7 +14,7 @@ class UpdateActivityController {
       id,
       name,
       description,
-      activitiy_category_id,
+      activity_category_id,
     });
 
     return response.status(200).json(updatedActivity);

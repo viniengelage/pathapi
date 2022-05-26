@@ -18,7 +18,6 @@ class CreateUserUseCase {
   ) {}
 
   async execute({
-    username,
     email,
     password,
     birthday,
@@ -28,16 +27,9 @@ class CreateUserUseCase {
     name,
   }: ICreateUserDTO): Promise<User> {
     const emailAlreadyExists = await this.usersRepository.findByEmail(email);
-    const usernameAlreadyExists = await this.usersRepository.findByUsername(
-      username
-    );
 
     if (emailAlreadyExists) {
       throw new ValidationError({ email: "Esse email já foi usado" });
-    }
-
-    if (usernameAlreadyExists) {
-      throw new ValidationError({ username: "Nome de usuário já utilizado" });
     }
 
     if (cellphone) {
@@ -50,7 +42,6 @@ class CreateUserUseCase {
     const encryptedPassword = await hash(password, 8);
 
     const user = await this.usersRepository.create({
-      username,
       email,
       password: encryptedPassword,
       name,

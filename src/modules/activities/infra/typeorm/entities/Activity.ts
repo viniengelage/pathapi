@@ -26,11 +26,11 @@ class Activity {
   icon: string;
 
   @ManyToOne(() => ActivityCategory)
-  @JoinColumn({ name: "activitiy_category_id" })
-  activitiy_category: ActivityCategory;
+  @JoinColumn({ name: "activity_category_id" })
+  activity_category: ActivityCategory;
 
   @Column()
-  activitiy_category_id: string;
+  activity_category_id: string;
 
   @AfterLoad()
   private getUrl() {
