@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import path from "path";
 import { container } from "tsyringe";
 
 import { ShowUserAvatarUseCase } from "./ShowUserAvatarUseCase";
@@ -11,7 +12,9 @@ class ShowUserAvatarController {
 
     const avatar = await showUserAvatarUseCase.execute(id);
 
-    return response.status(200).download(`./tmp/avatar/${avatar}`);
+    const avatarDir = path.resolve(__dirname, `../../../../../tmp/avatar`);
+
+    return response.status(200).sendFile(`${avatarDir}/${avatar}`);
   }
 }
 

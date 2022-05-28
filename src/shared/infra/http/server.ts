@@ -34,6 +34,8 @@ app.use(cors());
 
 app.use(router);
 
+app.use("/avatars", express.static("../../../../tmp/avatar"));
+
 app.use(
   (err: Error, request: Request, response: Response, next: NextFunction) => {
     if (err instanceof AppError) {
