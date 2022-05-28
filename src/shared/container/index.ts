@@ -6,6 +6,8 @@ import { ActivitiesCategoriesRepository } from "@modules/activities/infra/typeor
 import { ActivitiesRepository } from "@modules/activities/infra/typeorm/repositories/ActivitiesRepository";
 import { IActivitiesCategoriesRepository } from "@modules/activities/repositories/IActivitiesCategoriesRepository";
 import { IActivitiesRepository } from "@modules/activities/repositories/IActivitiesRepository";
+import { ChallengesRepository } from "@modules/challenges/infra/typeorm/repositories/ChallengesRepository";
+import { IChallengesRepository } from "@modules/challenges/repositories/IChallengesRepository";
 
 import { UsersRepository } from "../../modules/users/infra/typeorm/repositories/UsersRepository";
 import { IUsersRepository } from "../../modules/users/repositories/IUsersRepository";
@@ -23,4 +25,9 @@ container.registerSingleton<IActivitiesCategoriesRepository>(
 container.registerSingleton<IActivitiesRepository>(
   "ActivitiesRepository",
   ActivitiesRepository
+);
+
+container.registerSingleton<IChallengesRepository>(
+  "ChallengesRepository",
+  ChallengesRepository
 );
