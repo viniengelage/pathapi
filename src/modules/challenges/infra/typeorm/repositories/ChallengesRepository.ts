@@ -31,6 +31,38 @@ class ChallengesRepository implements IChallengesRepository {
 
     return challenge;
   }
+
+  async update({
+    id,
+    title,
+    description,
+    content,
+    earned_points,
+    is_completed,
+    see_more_url,
+    icon,
+  }: ICreateChallengeDTO): Promise<Challenge> {
+    await this.repository.save({
+      id,
+      title,
+      description,
+      content,
+      earned_points,
+      is_completed,
+      see_more_url,
+      icon,
+    });
+
+    const challenge = await this.repository.findOne(id);
+
+    return challenge;
+  }
+
+  async findById(id: string): Promise<Challenge> {
+    const challenge = await this.repository.findOne(id);
+
+    return challenge;
+  }
 }
 
 export { ChallengesRepository };

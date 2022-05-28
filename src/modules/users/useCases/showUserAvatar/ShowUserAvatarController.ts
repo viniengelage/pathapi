@@ -5,7 +5,7 @@ import { container } from "tsyringe";
 import { ShowUserAvatarUseCase } from "./ShowUserAvatarUseCase";
 
 class ShowUserAvatarController {
-  async handle(request: Request, response: Response) {
+  async handle(request: Request, response: Response): Promise<void> {
     const { id } = request.user;
 
     const showUserAvatarUseCase = container.resolve(ShowUserAvatarUseCase);

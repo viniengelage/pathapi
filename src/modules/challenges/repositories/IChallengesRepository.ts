@@ -3,4 +3,6 @@ import { Challenge } from "../infra/typeorm/entities/Challenge";
 
 export interface IChallengesRepository {
   create(data: ICreateChallengeDTO): Promise<Challenge>;
+  update(data: ICreateChallengeDTO): Promise<Challenge>;
+  findById(id: string): Promise<Challenge>;
 }

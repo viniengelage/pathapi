@@ -2,13 +2,11 @@ import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
 import { inject, injectable } from "tsyringe";
 
-import { User } from "@modules/users/infra/typeorm/entities/User";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
 
 interface IRequest {
-  username?: string;
-  email?: string;
+  email: string;
   password: string;
 }
 
@@ -27,14 +25,8 @@ class AuthenticateUserUseCase {
     private usersRepository: IUsersRepository
   ) {}
 
-  async execute({ username, email, password }: IRequest): Promise<IResponse> {
-    let user: User;
-
-    if (username) {
-      user = await this.usersRepository.findByUsername(username);
-    } else {
-      user = await this.usersRepository.findByEmail(email);
-    }
+  async execute({ email, password }: IRequest): Promise<IResponse> {
+    const user = await this.usersRepository.findByEmail(email);
 
     if (!user) {
       throw new AppError("Email or password incorrect");
