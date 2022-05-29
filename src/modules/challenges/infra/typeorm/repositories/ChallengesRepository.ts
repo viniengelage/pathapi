@@ -58,6 +58,12 @@ class ChallengesRepository implements IChallengesRepository {
     return challenge;
   }
 
+  async findAll(): Promise<Challenge[]> {
+    const challenges = this.repository.find();
+
+    return challenges;
+  }
+
   async findById(id: string): Promise<Challenge> {
     const challenge = await this.repository.findOne(id);
 

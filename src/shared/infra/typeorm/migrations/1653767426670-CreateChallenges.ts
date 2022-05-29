@@ -32,11 +32,6 @@ export class CreateChallenges1653767426670 implements MigrationInterface {
             isNullable: true,
           },
           {
-            name: "is_completed",
-            type: "boolean",
-            default: "false",
-          },
-          {
             name: "earned_points",
             type: "integer",
           },
