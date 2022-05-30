@@ -20,13 +20,8 @@ class Challenge {
   @Column()
   content: string;
 
-  @Column({
-    default: false,
-  })
-  is_completed: boolean;
-
   @Column()
-  earned_points: boolean;
+  earned_points: number;
 
   @Column()
   icon: string;

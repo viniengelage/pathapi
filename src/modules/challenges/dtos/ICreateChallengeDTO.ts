@@ -3,8 +3,7 @@ export interface ICreateChallengeDTO {
   title: string;
   description: string;
   content: string;
-  is_completed?: boolean;
-  earned_points: boolean;
+  earned_points: number;
   icon?: string;
   see_more_url: string;
 }

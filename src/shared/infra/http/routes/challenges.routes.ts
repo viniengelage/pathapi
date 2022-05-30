@@ -2,12 +2,16 @@ import { Router } from "express";
 import multer from "multer";
 
 import uploadConfig from "@config/upload";
+import { CompleteUserChallengeController } from "@modules/challenges/useCases/completeUserChallenge/CompleteUserChallengeController";
 import { CreateChallengeController } from "@modules/challenges/useCases/createChallenge/CreateChallengeController";
+import { CreateUserChallengeController } from "@modules/challenges/useCases/createUserChallenge/CreateUserChallengeController";
 import { ListChallengesController } from "@modules/challenges/useCases/listChallenges/ListChallengesController";
+import { ListChallengesByUserController } from "@modules/challenges/useCases/listChallengesByUser/ListChallengesByUserController";
 import { ShowChallengeController } from "@modules/challenges/useCases/showChallenge/ShowChallengeController";
 import { ShowChallengeIconController } from "@modules/challenges/useCases/showChallengeIcon/ShowChallengeIconController";
 import { UpdateChallengeController } from "@modules/challenges/useCases/updateChallenge/UpdateChallengeController";
 import { UpdateChallengeIconController } from "@modules/challenges/useCases/updateChallengeIcon/UpdateChallengeController";
+import { ensureAuthenticated } from "@shared/infra/middlewares/ensureAuthenticated";
 
 const challengesRoutes = Router();
 
@@ -19,6 +23,20 @@ const showChallengeIconController = new ShowChallengeIconController();
 const updateChallengeController = new UpdateChallengeController();
 const listChallengesController = new ListChallengesController();
 const showChallengeController = new ShowChallengeController();
+
+const createUserChallengeController = new CreateUserChallengeController();
+const listChallengesByUser = new ListChallengesByUserController();
+
+const completeUserChallengeController = new CompleteUserChallengeController();
+
+challengesRoutes.post("/users/:id", createUserChallengeController.handle);
+challengesRoutes.get(
+  "/users/me",
+  ensureAuthenticated,
+  listChallengesByUser.handle
+);
+
+challengesRoutes.patch("/finalize/:id", completeUserChallengeController.handle);
 
 challengesRoutes.post("/", createChallengeController.handle);
 challengesRoutes.get("/", listChallengesController.handle);

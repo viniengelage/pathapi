@@ -38,7 +38,6 @@ class ChallengesRepository implements IChallengesRepository {
     description,
     content,
     earned_points,
-    is_completed,
     see_more_url,
     icon,
   }: ICreateChallengeDTO): Promise<Challenge> {
@@ -48,7 +47,6 @@ class ChallengesRepository implements IChallengesRepository {
       description,
       content,
       earned_points,
-      is_completed,
       see_more_url,
       icon,
     });

@@ -11,6 +11,7 @@ interface IUpdateUserDTO {
   genre: "male" | "female" | "other";
   avatar?: string;
   activities?: Activity[];
+  points?: number;
 }
 
 export { IUpdateUserDTO };

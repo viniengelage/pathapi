@@ -47,6 +47,7 @@ class UsersRepository implements IUsersRepository {
     free_time,
     avatar,
     activities,
+    points,
   }: IUpdateUserDTO): Promise<User> {
     await this.repository.save({
       id,
@@ -57,6 +58,7 @@ class UsersRepository implements IUsersRepository {
       free_time,
       avatar,
       activities,
+      points,
     });
 
     const updatedUser = await this.repository.findOne(id);
@@ -68,9 +70,9 @@ class UsersRepository implements IUsersRepository {
     await this.repository.delete(id);
   }
 
-  async findById(id: string): Promise<User> {
+  async findById(id: string, relations = ["activities"]): Promise<User> {
     const user = this.repository.findOne(id, {
-      relations: ["activities"],
+      relations,
     });
 
     return user;
