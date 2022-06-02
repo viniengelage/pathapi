@@ -44,6 +44,10 @@ class UserChallengesRepository implements IUserChallengesRepository {
     return updatedUserChallenge;
   }
 
+  async delete(id: string): Promise<void> {
+    await this.repository.delete(id);
+  }
+
   async findById(id: string): Promise<UserChallenge> {
     const userChallenge = await this.repository.findOne(id);
 

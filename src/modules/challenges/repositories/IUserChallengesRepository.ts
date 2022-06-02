@@ -4,6 +4,7 @@ import { UserChallenge } from "../infra/typeorm/entities/UserChallenge";
 interface IUserChallengesRepository {
   create(data: ICreateUserChallengeDTO): Promise<UserChallenge>;
   update(data: ICreateUserChallengeDTO): Promise<UserChallenge>;
+  delete(id: string): Promise<void>;
   findByUserAndChallengeId(
     user_id: string,
     challenge_id: string

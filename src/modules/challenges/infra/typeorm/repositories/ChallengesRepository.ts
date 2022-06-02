@@ -56,6 +56,10 @@ class ChallengesRepository implements IChallengesRepository {
     return challenge;
   }
 
+  async delete(id: string): Promise<void> {
+    await this.repository.delete(id);
+  }
+
   async findAll(): Promise<Challenge[]> {
     const challenges = this.repository.find();
 
