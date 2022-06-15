@@ -1,13 +1,10 @@
 import { hash } from "bcrypt";
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
 import { inject, injectable } from "tsyringe";
 
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { IUsersTokensRepository } from "@modules/users/repositories/IUsersTokensRepository";
+import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
 import { AppError } from "@shared/errors/AppError";
-
-dayjs.extend(utc);
 
 interface IRequest {
   token: string;
@@ -20,7 +17,9 @@ class ResetUserPasswordUseCase {
     @inject("UsersTokensRepository")
     private usersTokensRepository: IUsersTokensRepository,
     @inject("UsersRepository")
-    private usersRepository: IUsersRepository
+    private usersRepository: IUsersRepository,
+    @inject("DayjsDateProvider")
+    private dateProvider: IDateProvider
   ) {}
 
   async execute({ token, password }: IRequest) {
@@ -32,8 +31,13 @@ class ResetUserPasswordUseCase {
       throw new AppError("Token inválido");
     }
 
-    if (dayjs(userToken.expires_date).isBefore(dayjs())) {
-      throw new AppError("Tokene expirado");
+    const isBefore = this.dateProvider.isBefore(
+      userToken.expires_date,
+      this.dateProvider.now()
+    );
+
+    if (isBefore) {
+      throw new AppError("Token expirado");
     }
 
     const user = await this.usersRepository.findById(userToken.user_id);

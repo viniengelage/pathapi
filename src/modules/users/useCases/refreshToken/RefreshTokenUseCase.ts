@@ -1,12 +1,9 @@
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
 import { sign, verify } from "jsonwebtoken";
 import { inject, injectable } from "tsyringe";
 
 import { IUsersTokensRepository } from "@modules/users/repositories/IUsersTokensRepository";
+import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
 import { AppError } from "@shared/errors/AppError";
-
-dayjs.extend(utc);
 
 interface IPayload {
   sub: string;
@@ -22,7 +19,9 @@ interface ITokenResponse {
 class RefreshTokenUseCase {
   constructor(
     @inject("UsersTokensRepository")
-    private usersTokensRepository: IUsersTokensRepository
+    private usersTokensRepository: IUsersTokensRepository,
+    @inject("DayjsDateProvider")
+    private dateProvider: IDateProvider
   ) {}
 
   async execute(token: string): Promise<ITokenResponse> {
@@ -48,10 +47,12 @@ class RefreshTokenUseCase {
       expiresIn: process.env.JWT_REFRESH_EXPIRES,
     });
 
+    const expires_date = this.dateProvider.addDays(30);
+
     await this.usersTokensRepository.create({
       user_id,
       refresh_token,
-      expires_date: dayjs().add(30, "days").toDate(),
+      expires_date,
     });
 
     const newToken = sign({}, process.env.JWT_SECRET, {

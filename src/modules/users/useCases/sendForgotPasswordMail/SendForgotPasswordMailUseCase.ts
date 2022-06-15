@@ -1,15 +1,12 @@
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
 import { resolve } from "path";
 import { inject, injectable } from "tsyringe";
 import { v4 as uuidV4 } from "uuid";
 
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { IUsersTokensRepository } from "@modules/users/repositories/IUsersTokensRepository";
+import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
 import { IMailProvider } from "@shared/container/providers/MailProvider/IMailProvider";
 import { AppError } from "@shared/errors/AppError";
-
-dayjs.extend(utc);
 
 @injectable()
 class SendForgotPasswordMailUseCase {
@@ -19,7 +16,9 @@ class SendForgotPasswordMailUseCase {
     @inject("UsersTokensRepository")
     private usersTokensRepository: IUsersTokensRepository,
     @inject("EtherealMailProvider")
-    private mailProvider: IMailProvider
+    private mailProvider: IMailProvider,
+    @inject("DayjsDateProvider")
+    private dateProvider: IDateProvider
   ) {}
 
   async execute(email: string) {
@@ -43,7 +42,7 @@ class SendForgotPasswordMailUseCase {
     await this.usersTokensRepository.create({
       refresh_token: token,
       user_id: user.id,
-      expires_date: dayjs().add(3, "hour").toDate(),
+      expires_date: this.dateProvider.addHours(3),
     });
 
     const variables = {

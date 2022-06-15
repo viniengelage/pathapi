@@ -1,14 +1,11 @@
 import { compare } from "bcrypt";
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
 import { sign } from "jsonwebtoken";
 import { inject, injectable } from "tsyringe";
 
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { IUsersTokensRepository } from "@modules/users/repositories/IUsersTokensRepository";
+import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
 import { AppError } from "@shared/errors/AppError";
-
-dayjs.extend(utc);
 
 interface IRequest {
   email: string;
@@ -30,7 +27,9 @@ class AuthenticateUserUseCase {
     @inject("UsersRepository")
     private usersRepository: IUsersRepository,
     @inject("UsersTokensRepository")
-    private usersTokensRepository: IUsersTokensRepository
+    private usersTokensRepository: IUsersTokensRepository,
+    @inject("DayjsDateProvider")
+    private dateProvider: IDateProvider
   ) {}
 
   async execute({ email, password }: IRequest): Promise<IResponse> {
@@ -59,7 +58,7 @@ class AuthenticateUserUseCase {
     await this.usersTokensRepository.create({
       user_id: user.id,
       refresh_token,
-      expires_date: dayjs().add(30, "days").toDate(),
+      expires_date: this.dateProvider.addDays(30),
     });
 
     return {
