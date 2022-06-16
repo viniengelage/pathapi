@@ -57,8 +57,30 @@ class PostsRepository implements IPostsRepository {
 
     return updatedPost;
   }
+
   async delete(id: string): Promise<void> {
     await this.repository.delete(id);
+  }
+
+  async findAll(): Promise<Post[]> {
+    const posts = await this.repository
+      .createQueryBuilder("posts")
+      .leftJoinAndSelect("posts.user", "user")
+      .select(["posts", "user.id", "user.name", "user.avatar"])
+      .getMany();
+
+    return posts;
+  }
+
+  async findAllByUserId(user_id: string): Promise<Post[]> {
+    const posts = await this.repository
+      .createQueryBuilder("posts")
+      .leftJoinAndSelect("posts.user", "user")
+      .where("posts.user_id = :id", { id: user_id })
+      .select(["posts", "user.id", "user.name"])
+      .getMany();
+
+    return posts;
   }
 
   async findById(id: string): Promise<Post> {

@@ -11,7 +11,6 @@ import {
 
 import { Activity } from "@modules/activities/infra/typeorm/entities/Activity";
 import { Challenge } from "@modules/challenges/infra/typeorm/entities/Challenge";
-import { UserChallenge } from "@modules/challenges/infra/typeorm/entities/UserChallenge";
 
 export enum UserGenre {
   MALE = "male",
