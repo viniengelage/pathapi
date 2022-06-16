@@ -57,11 +57,14 @@ class PostsRepository implements IPostsRepository {
 
     return updatedPost;
   }
+  async delete(id: string): Promise<void> {
+    await this.repository.delete(id);
+  }
 
   async findById(id: string): Promise<Post> {
-    const post = await this.repository.findOne(id, { relations: ["user"] });
+    const post = await this.repository.findOne(id);
 
-    delete post.user.password;
+    // add relation of users
 
     return post;
   }
