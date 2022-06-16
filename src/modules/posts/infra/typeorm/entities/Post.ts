@@ -48,7 +48,7 @@ class Post {
 
   @AfterLoad()
   private getUrl() {
-    this.thumbnail_url = `${process.env.APP_HOST}:${process.env.APP_PORT}/posts/${this.id}/thumbnail/${this.thumbnail}`;
+    this.thumbnail_url = `${process.env.APP_HOST}:${process.env.APP_PORT}/posts/${this.id}/thumbnail`;
   }
 }
 
