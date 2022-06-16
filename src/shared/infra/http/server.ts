@@ -34,6 +34,7 @@ app.use(cors());
 
 app.use(router);
 
+app.use("/images", express.static("public"));
 app.use("/avatars", express.static("../../../../tmp/avatar"));
 
 app.use(

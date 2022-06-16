@@ -46,7 +46,9 @@ class SendForgotPasswordMailUseCase {
     });
 
     const variables = {
-      name: user.name,
+      logo: `${process.env.APP_HOST}:${process.env.APP_PORT}/images/logo.png`,
+      logoMinimal: `${process.env.APP_HOST}:${process.env.APP_PORT}/images/logo-minimal.png`,
+      name: user.name.split(" ")[0],
       link: `${process.env.APP_HOST}:${process.env.APP_PORT}/auth/password/reset?token=${token}`,
     };
 
