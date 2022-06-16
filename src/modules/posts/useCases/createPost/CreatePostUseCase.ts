@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 
-import { CreatePostDTO } from "@modules/posts/dtos/CreatePostDTO";
+import { ICreatePostDTO } from "@modules/posts/dtos/ICreatePostDTO";
 import { Post } from "@modules/posts/infra/typeorm/entities/Post";
 import { IPostsRepository } from "@modules/posts/repositories/IPostsRepository";
 
@@ -17,7 +17,7 @@ class CreatePostUseCase {
     see_more_url,
     user_id,
     thumbnail,
-  }: CreatePostDTO): Promise<Post> {
+  }: ICreatePostDTO): Promise<Post> {
     const post = await this.postsRepository.create({
       title,
       description,

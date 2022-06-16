@@ -1,8 +1,9 @@
-import { CreatePostDTO } from "../dtos/CreatePostDTO";
+import { ICreatePostDTO } from "../dtos/ICreatePostDTO";
 import { Post } from "../infra/typeorm/entities/Post";
 
 interface IPostsRepository {
-  create(data: CreatePostDTO): Promise<Post>;
+  create(data: ICreatePostDTO): Promise<Post>;
+  update(data: ICreatePostDTO): Promise<Post>;
   findById(id: string): Promise<Post>;
 }
 

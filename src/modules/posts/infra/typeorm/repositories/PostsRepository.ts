@@ -1,6 +1,6 @@
 import { getRepository, Repository } from "typeorm";
 
-import { CreatePostDTO } from "@modules/posts/dtos/CreatePostDTO";
+import { ICreatePostDTO } from "@modules/posts/dtos/ICreatePostDTO";
 import { IPostsRepository } from "@modules/posts/repositories/IPostsRepository";
 
 import { Post } from "../entities/Post";
@@ -19,7 +19,7 @@ class PostsRepository implements IPostsRepository {
     user_id,
     see_more_url,
     thumbnail,
-  }: CreatePostDTO): Promise<Post> {
+  }: ICreatePostDTO): Promise<Post> {
     const post = this.repository.create({
       title,
       description,
@@ -32,6 +32,30 @@ class PostsRepository implements IPostsRepository {
     await this.repository.save(post);
 
     return post;
+  }
+
+  async update({
+    id,
+    title,
+    description,
+    content,
+    user_id,
+    see_more_url,
+    thumbnail,
+  }: ICreatePostDTO): Promise<Post> {
+    await this.repository.save({
+      id,
+      title,
+      description,
+      content,
+      user_id,
+      see_more_url,
+      thumbnail,
+    });
+
+    const updatedPost = await this.repository.findOne(id);
+
+    return updatedPost;
   }
 
   async findById(id: string): Promise<Post> {
