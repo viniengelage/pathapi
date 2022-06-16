@@ -16,6 +16,7 @@ class CreatePostUseCase {
     content,
     see_more_url,
     user_id,
+    thumbnail,
   }: CreatePostDTO): Promise<Post> {
     const post = await this.postsRepository.create({
       title,
@@ -23,6 +24,7 @@ class CreatePostUseCase {
       content,
       see_more_url,
       user_id,
+      thumbnail,
     });
 
     return post;

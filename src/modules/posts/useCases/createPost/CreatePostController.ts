@@ -7,6 +7,7 @@ class CreatePostController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { title, description, content, see_more_url } = request.body;
     const { id } = request.user;
+    const thumbnail = request.file.filename;
 
     const createpostUseCase = container.resolve(CreatePostUseCase);
 
@@ -16,6 +17,7 @@ class CreatePostController {
       content,
       see_more_url,
       user_id: id,
+      thumbnail,
     });
 
     return response.status(201).json(post);

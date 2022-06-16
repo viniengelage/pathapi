@@ -18,6 +18,7 @@ class PostsRepository implements IPostsRepository {
     content,
     user_id,
     see_more_url,
+    thumbnail,
   }: CreatePostDTO): Promise<Post> {
     const post = this.repository.create({
       title,
@@ -25,6 +26,7 @@ class PostsRepository implements IPostsRepository {
       content,
       user_id,
       see_more_url,
+      thumbnail,
     });
 
     await this.repository.save(post);
