@@ -1,4 +1,5 @@
 import {
+  AfterLoad,
   Column,
   CreateDateColumn,
   Entity,
@@ -12,6 +13,8 @@ import { User } from "@modules/users/infra/typeorm/entities/User";
 
 @Entity("posts")
 class Post {
+  private thumbnail_url: string;
+
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
@@ -42,6 +45,11 @@ class Post {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @AfterLoad()
+  private getUrl() {
+    this.thumbnail_url = `${process.env.APP_HOST}:${process.env.APP_PORT}/posts/${this.id}/thumbnail/${this.thumbnail}`;
+  }
 }
 
 export { Post };
