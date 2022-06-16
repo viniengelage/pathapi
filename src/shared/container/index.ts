@@ -10,6 +10,8 @@ import { ChallengesRepository } from "@modules/challenges/infra/typeorm/reposito
 import { UserChallengesRepository } from "@modules/challenges/infra/typeorm/repositories/UserChallengesRepository";
 import { IChallengesRepository } from "@modules/challenges/repositories/IChallengesRepository";
 import { IUserChallengesRepository } from "@modules/challenges/repositories/IUserChallengesRepository";
+import { PostsRepository } from "@modules/posts/infra/typeorm/repositories/PostsRepository";
+import { IPostsRepository } from "@modules/posts/repositories/IPostsRepository";
 import { UsersTokensRepository } from "@modules/users/infra/typeorm/repositories/UsersTokensRepository";
 import { IUsersTokensRepository } from "@modules/users/repositories/IUsersTokensRepository";
 
@@ -44,4 +46,9 @@ container.registerSingleton<IUserChallengesRepository>(
 container.registerSingleton<IUsersTokensRepository>(
   "UsersTokensRepository",
   UsersTokensRepository
+);
+
+container.registerSingleton<IPostsRepository>(
+  "PostsRepository",
+  PostsRepository
 );

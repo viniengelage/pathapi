@@ -48,6 +48,7 @@ export class CreatePosts1655327845814 implements MigrationInterface {
           {
             name: "updated_at",
             type: "timestamp",
+            default: "now()",
           },
         ],
         foreignKeys: [
