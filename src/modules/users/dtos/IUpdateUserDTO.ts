@@ -12,6 +12,7 @@ interface IUpdateUserDTO {
   avatar?: string;
   activities?: Activity[];
   points?: number;
+  push_token?: string;
 }
 
 export { IUpdateUserDTO };

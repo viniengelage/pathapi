@@ -49,6 +49,7 @@ class UsersRepository implements IUsersRepository {
     activities,
     points,
     password,
+    push_token,
   }: IUpdateUserDTO): Promise<User> {
     await this.repository.save({
       id,
@@ -61,6 +62,7 @@ class UsersRepository implements IUsersRepository {
       activities,
       points,
       password,
+      push_token,
     });
 
     const updatedUser = await this.repository.findOne(id);

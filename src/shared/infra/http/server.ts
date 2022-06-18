@@ -2,7 +2,8 @@ import "reflect-metadata";
 import "express-async-errors";
 import cors from "cors";
 import dotenv from "dotenv";
-import express, { NextFunction, Request, Response } from "express";
+import { Expo, ExpoPushMessage } from "expo-server-sdk";
+import express, { NextFunction, Request, response, Response } from "express";
 import { setLocale } from "yup";
 
 import { AppError } from "@shared/errors/AppError";
@@ -36,6 +37,21 @@ app.use(router);
 
 app.use("/images", express.static("public"));
 app.use("/avatars", express.static("../../../../tmp/avatar"));
+
+const expo = new Expo();
+
+app.post("/notify", async (req, res) => {
+  await expo.sendPushNotificationsAsync([
+    {
+      to: "ExponentPushToken[-gFDUUExYHoxs_M5ww6P96]",
+      title: "first push notification from node api",
+      body: "Cummon men",
+      subtitle: "mama eu",
+    },
+  ]);
+
+  return res.send();
+});
 
 app.use(
   (err: Error, request: Request, response: Response, next: NextFunction) => {

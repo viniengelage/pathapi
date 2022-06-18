@@ -10,7 +10,8 @@ import { UpdateUserUseCase } from "./UpdateUserUseCase";
 class UpdateUserController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { id } = request.user;
-    const { name, birthday, cellphone, genre, free_time } = request.body;
+    const { name, birthday, cellphone, genre, free_time, push_token } =
+      request.body;
 
     const updateUserUseCase = container.resolve(UpdateUserUseCase);
 
@@ -21,6 +22,7 @@ class UpdateUserController {
       cellphone,
       genre,
       free_time,
+      push_token,
     };
 
     const schema = Yup.object().shape({

@@ -74,6 +74,9 @@ class User {
   })
   role: "customer" | "admin" | "professional";
 
+  @Column()
+  push_token: string;
+
   @ManyToMany(() => Activity)
   @JoinTable({
     name: "users_activities",
