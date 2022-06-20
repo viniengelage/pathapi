@@ -4,6 +4,7 @@ import { UserChallenge } from "@modules/challenges/infra/typeorm/entities/UserCh
 import { IChallengesRepository } from "@modules/challenges/repositories/IChallengesRepository";
 import { IUserChallengesRepository } from "@modules/challenges/repositories/IUserChallengesRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
+import { INotificationProvider } from "@shared/container/providers/NotificationProvider/INotificationProvider";
 import { AppError } from "@shared/errors/AppError";
 
 interface IRequest {
@@ -19,7 +20,9 @@ class CreateUserChallengeUseCase {
     @inject("UsersRepository")
     private usersRepository: IUsersRepository,
     @inject("UserChallengesRepository")
-    private userChallengesRepository: IUserChallengesRepository
+    private userChallengesRepository: IUserChallengesRepository,
+    @inject("ExpoNotificationProvider")
+    private notificationProvider: INotificationProvider
   ) {}
 
   async execute({ user_id, challenge_id }: IRequest): Promise<UserChallenge> {
@@ -56,6 +59,14 @@ class CreateUserChallengeUseCase {
       user_id,
       challenge_id,
     });
+
+    if (user.push_token) {
+      await this.notificationProvider.send({
+        to: user.push_token,
+        title: "Novo desafio!",
+        body: "Você tem um novo desafio te esperando",
+      });
+    }
 
     return userChallenge;
   }
