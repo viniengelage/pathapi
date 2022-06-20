@@ -18,6 +18,8 @@ class ChallengesRepository implements IChallengesRepository {
     content,
     earned_points,
     see_more_url,
+    icon,
+    level,
   }: ICreateChallengeDTO): Promise<Challenge> {
     const challenge = this.repository.create({
       title,
@@ -25,6 +27,8 @@ class ChallengesRepository implements IChallengesRepository {
       content,
       earned_points,
       see_more_url,
+      icon,
+      level,
     });
 
     await this.repository.save(challenge);
@@ -60,14 +64,26 @@ class ChallengesRepository implements IChallengesRepository {
     await this.repository.delete(id);
   }
 
-  async findAll(): Promise<Challenge[]> {
-    const challenges = this.repository.find();
+  async findAll(order: "ASC" | "DESC" = "ASC"): Promise<Challenge[]> {
+    const challenges = this.repository.find({
+      order: {
+        level: order,
+      },
+    });
 
     return challenges;
   }
 
   async findById(id: string): Promise<Challenge> {
     const challenge = await this.repository.findOne(id);
+
+    return challenge;
+  }
+
+  async findByLevel(level: number): Promise<Challenge> {
+    const challenge = await this.repository.findOne({
+      level,
+    });
 
     return challenge;
   }

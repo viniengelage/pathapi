@@ -41,6 +41,7 @@ challengesRoutes.post(
   is("admin"),
   createUserChallengeController.handle
 );
+
 challengesRoutes.get("/users/me", is("customer"), listChallengesByUser.handle);
 challengesRoutes.delete(
   "/users/challenges/:id/delete",
@@ -53,7 +54,13 @@ challengesRoutes.patch(
   completeUserChallengeController.handle
 );
 
-challengesRoutes.post("/", is("admin"), createChallengeController.handle);
+challengesRoutes.post(
+  "/",
+  is("admin"),
+  uploadIcon.single("icon"),
+  createChallengeController.handle
+);
+
 challengesRoutes.get("/", is("admin"), listChallengesController.handle);
 challengesRoutes.get("/:id", is("admin"), showChallengeController.handle);
 challengesRoutes.put("/:id", is("admin"), updateChallengeController.handle);
@@ -68,7 +75,7 @@ challengesRoutes.patch(
 
 challengesRoutes.get(
   "/:id/icon",
-  is("admin"),
+  is(["admin", "customer"]),
   showChallengeIconController.handle
 );
 

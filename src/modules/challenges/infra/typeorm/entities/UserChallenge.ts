@@ -1,4 +1,15 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+
+import { User } from "@modules/users/infra/typeorm/entities/User";
+
+import { Challenge } from "./Challenge";
 
 @Entity("users_challenges")
 class UserChallenge {
@@ -8,8 +19,16 @@ class UserChallenge {
   @Column()
   user_id: string;
 
+  @ManyToOne(() => User)
+  @JoinColumn({ name: "user_id" })
+  user: User;
+
   @Column()
   challenge_id: string;
+
+  @ManyToOne(() => Challenge)
+  @JoinColumn({ name: "challenge_id" })
+  challenge: Challenge;
 
   @Column({
     default: false,

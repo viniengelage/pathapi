@@ -80,7 +80,19 @@ class UserChallengesRepository implements IUserChallengesRepository {
   }
 
   async listByUserId(user_id: string): Promise<UserChallenge[]> {
-    const challenges = this.repository.find({ user_id });
+    const challenges = await this.repository
+      .createQueryBuilder("users_challenges")
+      .where("users_challenges.user_id = :id", { id: user_id })
+      .leftJoinAndSelect("users_challenges.user", "user")
+      .leftJoinAndSelect("users_challenges.challenge", "challenge")
+      .select([
+        "users_challenges",
+        "challenge",
+        "user.id",
+        "user.name",
+        "user.avatar",
+      ])
+      .getMany();
 
     return challenges;
   }

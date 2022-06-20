@@ -1,4 +1,5 @@
 import {
+  AfterLoad,
   Column,
   CreateDateColumn,
   Entity,
@@ -8,6 +9,8 @@ import {
 
 @Entity("challenges")
 class Challenge {
+  private icon_url: string;
+
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
@@ -27,6 +30,9 @@ class Challenge {
   icon: string;
 
   @Column()
+  level: number;
+
+  @Column()
   see_more_url: string;
 
   @CreateDateColumn()
@@ -34,6 +40,11 @@ class Challenge {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @AfterLoad()
+  getUrl() {
+    this.icon_url = `${process.env.APP_HOST}:${process.env.APP_PORT}/challenges/${this.id}/icon`;
+  }
 }
 
 export { Challenge };

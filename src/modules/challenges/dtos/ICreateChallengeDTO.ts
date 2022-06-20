@@ -5,5 +5,6 @@ export interface ICreateChallengeDTO {
   content: string;
   earned_points: number;
   icon?: string;
+  level: number;
   see_more_url: string;
 }
