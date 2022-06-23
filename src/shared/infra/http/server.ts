@@ -12,7 +12,7 @@ import { bree } from "@shared/infra/bree";
 import createConnection from "../typeorm";
 import { router } from "./routes";
 
-import "../../container";
+import "@shared/container";
 
 dotenv.config();
 
@@ -39,8 +39,8 @@ app.use(cors());
 
 app.use(router);
 
-app.use("/images", express.static("public"));
-app.use("/avatars", express.static("../../../../tmp/avatar"));
+// app.use("/images", express.static("public"));
+// app.use("/avatars", express.static("../../../../tmp/avatar"));
 
 app.use(
   (err: Error, request: Request, response: Response, next: NextFunction) => {
