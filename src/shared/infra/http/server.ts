@@ -18,7 +18,7 @@ dotenv.config();
 
 createConnection();
 
-// bree.start();
+bree.start();
 
 setLocale({
   string: {
