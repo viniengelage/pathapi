@@ -65,6 +65,6 @@ app.use(
   }
 );
 
-app.listen(process.env.APP_PORT, () =>
+app.listen(process.env.PORT || 3333, () =>
   console.log("Sever is now running by docker!")
 );
