@@ -6,9 +6,9 @@
   "author": "Vinicios Engelage",
   "license": "MIT",
   "scripts": {
-    "start":"NODE_ENV=production node ./dist/shared/infra/http/server.js",
-    "start:queue":"NODE_ENV=production node ./dist/shared/infra/http/queue.js",
-    "start:migrations":"NODE_ENV=production node ./node_modules/typeorm/cli migration:run",
+    "start":"node ./dist/shared/infra/http/server.js",
+    "start:queue":"node ./dist/shared/infra/http/queue.js",
+    "start:migrations":"node ./node_modules/typeorm/cli migration:run",
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files",
     "dev": "ts-node-dev --transpile-only --ignore-watch node_modules --respawn -r tsconfig-paths/register src/shared/infra/http/server.ts",
     "queue": "ts-node-dev --transpile-only --ignore-watch node_modules --respawn -r tsconfig-paths/register src/shared/infra/http/queue.ts",
