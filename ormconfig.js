@@ -7,7 +7,9 @@ module.exports = {
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   extra: {
-    ssl: true,
+    ssl: {
+      rejectUnauthorized: false
+    },
   },
   migrations: ["./src/shared/infra/typeorm/migrations/*.ts"],
   entities: ["./src/modules/**/entities/*.ts"],
