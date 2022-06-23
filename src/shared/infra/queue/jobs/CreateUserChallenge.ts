@@ -33,7 +33,7 @@ export default {
     const connection = getConnectionManager();
 
     if (!connection.has("default")) {
-      await createConnection(process.env.DB_HOST);
+      await createConnection();
     }
 
     const usersRespository = new UsersRepository();
