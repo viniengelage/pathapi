@@ -1,9 +1,14 @@
 import "dotenv/config";
 import Queue from "bull";
+import { createClient } from "redis";
 
 import redisConfig from "@config/redis";
 
 import CreateUserChallenge from "./jobs/CreateUserChallenge";
+
+// const redisClient = createClient({
+//   url: process.env.REDIS_URL,
+// });
 
 const userChallengeQueue = new Queue(CreateUserChallenge.key, {
   redis: redisConfig,
