@@ -9,6 +9,7 @@ interface IUsersRepository {
   findAll(): Promise<User[]>;
   findById(id: string, relations?: string[]): Promise<User>;
   findByEmail(email: string): Promise<User>;
+  findByFreeTime(from: string, to: string): Promise<User[]>;
 }
 
 export { IUsersRepository };

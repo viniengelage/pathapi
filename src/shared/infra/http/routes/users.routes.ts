@@ -9,6 +9,7 @@ import { ShowUserAvatarController } from "@modules/users/useCases/showUserAvatar
 import { UpdateUserController } from "@modules/users/useCases/updateUser/UpdateUserController";
 import { UpdateUserActivityController } from "@modules/users/useCases/updateUserActivity/UpdateUserActivityController";
 import { UpdateUserAvatarController } from "@modules/users/useCases/updateUserAvatar/UpdateUserAvatarController";
+import { UpdateUserPasswordController } from "@modules/users/useCases/updateUserPassword/UpdateUserPasswordController";
 import { ensureAuthenticated } from "@shared/infra/middlewares/ensureAuthenticated";
 import { is } from "@shared/infra/middlewares/permission";
 
@@ -23,6 +24,7 @@ const showUserController = new ShowUserController();
 const updateUserAvatarController = new UpdateUserAvatarController();
 const showUserAvatarController = new ShowUserAvatarController();
 const updateUserActivityController = new UpdateUserActivityController();
+const updateUserPasswordController = new UpdateUserPasswordController();
 
 usersRouter.get(
   "/",
@@ -50,6 +52,12 @@ usersRouter.patch(
   "/me/activities",
   ensureAuthenticated,
   updateUserActivityController.handle
+);
+
+usersRouter.put(
+  "/me/password",
+  ensureAuthenticated,
+  updateUserPasswordController.handle
 );
 
 usersRouter.put("/", ensureAuthenticated, updateUserController.handle);

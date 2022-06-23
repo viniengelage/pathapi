@@ -87,6 +87,16 @@ class ChallengesRepository implements IChallengesRepository {
 
     return challenge;
   }
+
+  async findNextLevel(previous_level: number): Promise<Challenge> {
+    const nextLevel = await this.repository.findOne({
+      where: {
+        level: previous_level + 1,
+      },
+    });
+
+    return nextLevel;
+  }
 }
 
 export { ChallengesRepository };

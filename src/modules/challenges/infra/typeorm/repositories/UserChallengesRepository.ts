@@ -79,7 +79,10 @@ class UserChallengesRepository implements IUserChallengesRepository {
     return challenge;
   }
 
-  async listByUserId(user_id: string): Promise<UserChallenge[]> {
+  async listByUserId(
+    user_id: string,
+    order: "ASC" | "DESC" = "ASC"
+  ): Promise<UserChallenge[]> {
     const challenges = await this.repository
       .createQueryBuilder("users_challenges")
       .where("users_challenges.user_id = :id", { id: user_id })
@@ -92,9 +95,29 @@ class UserChallengesRepository implements IUserChallengesRepository {
         "user.name",
         "user.avatar",
       ])
+      .orderBy("challenge.level", order)
       .getMany();
 
     return challenges;
+  }
+
+  async findByLastedCompletedLevel(user_id: string): Promise<UserChallenge> {
+    const userLastedCompletedLevel = await this.repository
+      .createQueryBuilder("users_challenges")
+      .where("users_challenges.user_id = :id", { id: user_id })
+      .leftJoinAndSelect("users_challenges.user", "user")
+      .leftJoinAndSelect("users_challenges.challenge", "challenge")
+      .select([
+        "users_challenges",
+        "challenge",
+        "user.id",
+        "user.name",
+        "user.avatar",
+      ])
+      .orderBy("challenge.level", "DESC")
+      .getOne();
+
+    return userLastedCompletedLevel;
   }
 }
 

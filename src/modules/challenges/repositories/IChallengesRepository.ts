@@ -8,4 +8,5 @@ export interface IChallengesRepository {
   findAll(order?: "ASC" | "DESC"): Promise<Challenge[]>;
   findById(id: string): Promise<Challenge>;
   findByLevel(level: number): Promise<Challenge>;
+  findNextLevel(previous_level: number): Promise<Challenge>;
 }

@@ -1,4 +1,4 @@
-import { getRepository, Repository } from "typeorm";
+import { Between, getRepository, Repository } from "typeorm";
 
 import { ICreateUserDTO } from "@modules/users/dtos/ICreateUserDTO";
 import { IUpdateUserDTO } from "@modules/users/dtos/IUpdateUserDTO";
@@ -92,6 +92,16 @@ class UsersRepository implements IUsersRepository {
     const all = await this.repository.find();
 
     return all;
+  }
+
+  async findByFreeTime(from: string, to: string): Promise<User[]> {
+    const users = await this.repository.find({
+      where: {
+        free_time: Between(from, to),
+      },
+    });
+
+    return users;
   }
 }
 

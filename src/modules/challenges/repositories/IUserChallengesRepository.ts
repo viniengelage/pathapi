@@ -10,8 +10,12 @@ interface IUserChallengesRepository {
     challenge_id: string
   ): Promise<UserChallenge>;
   findIncompletedChallenge(user_id: string): Promise<UserChallenge>;
-  listByUserId(user_id: string): Promise<UserChallenge[]>;
+  listByUserId(
+    user_id: string,
+    order?: "ASC" | "DESC"
+  ): Promise<UserChallenge[]>;
   findById(id: string): Promise<UserChallenge>;
+  findByLastedCompletedLevel(user_id: string): Promise<UserChallenge>;
 }
 
 export { IUserChallengesRepository };
