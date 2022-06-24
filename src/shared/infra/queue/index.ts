@@ -8,7 +8,13 @@ import CreateUserChallenge from "./jobs/CreateUserChallenge";
 
 const userChallengeQueue =
   process.env.NODE_ENV === "production"
-    ? new Queue(CreateUserChallenge.key, process.env.REDIS_TLS_URL)
+    ? new Queue(CreateUserChallenge.key, process.env.REDIS_TLS_URL, {
+        redis: {
+          tls: {
+            rejectUnauthorized: false,
+          },
+        },
+      })
     : new Queue(CreateUserChallenge.key, {
         redis: redisConfig,
       });
