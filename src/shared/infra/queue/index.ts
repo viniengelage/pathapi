@@ -1,18 +1,17 @@
 import "dotenv/config";
 import Queue from "bull";
-import { createClient } from "redis";
+import {} from "redis";
 
 import redisConfig from "@config/redis";
 
 import CreateUserChallenge from "./jobs/CreateUserChallenge";
 
-// const redisClient = createClient({
-//   url: process.env.REDIS_URL,
-// });
-
-const userChallengeQueue = new Queue(CreateUserChallenge.key, {
-  redis: redisConfig,
-});
+const userChallengeQueue =
+  process.env.NODE_ENV === "production"
+    ? new Queue(CreateUserChallenge.key, process.env.REDIS_TLS_URL)
+    : new Queue(CreateUserChallenge.key, {
+        redis: redisConfig,
+      });
 
 userChallengeQueue.on("failed", (error) => console.log("falhou", error));
 userChallengeQueue.on("error", (error) => console.log("Error", error));
