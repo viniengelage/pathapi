@@ -12,10 +12,7 @@ class ShowActivityIconUseCase {
   ) {}
 
   async execute(id: string): Promise<string> {
-    console.log("Veio aqui");
     const activity = await this.activitiesRepository.findById(id);
-
-    console.log(activity);
 
     if (!activity) {
       throw new AppError("Atividade não encontrada");

@@ -1,7 +1,8 @@
+import { v2 as cloudinary } from "cloudinary";
 import { Router } from "express";
 import multer from "multer";
+import { CloudinaryStorage, Options } from "multer-storage-cloudinary";
 
-import uploadConfig from "@config/upload";
 import { CreatePostController } from "@modules/posts/useCases/createPost/CreatePostController";
 import { DeletePostController } from "@modules/posts/useCases/deletePost/DeletePostController";
 import { ListPostsController } from "@modules/posts/useCases/listPosts/ListPostsController";
@@ -11,7 +12,22 @@ import { UpdatePostController } from "@modules/posts/useCases/updatePost/UpdateP
 import { ensureAuthenticated } from "@shared/infra/middlewares/ensureAuthenticated";
 import { is } from "@shared/infra/middlewares/permission";
 
-const uploadThumbnail = multer(uploadConfig.upload("./tmp/thumbnail"));
+declare interface ICloudinaryOptions extends Options {
+  params: {
+    folder: string;
+  };
+}
+
+const storageOptions: ICloudinaryOptions = {
+  cloudinary,
+  params: {
+    folder: "posts",
+  },
+};
+
+const storage = new CloudinaryStorage(storageOptions);
+
+const uploadThumbnail = multer({ storage });
 
 const createPostController = new CreatePostController();
 const listPostsController = new ListPostsController();

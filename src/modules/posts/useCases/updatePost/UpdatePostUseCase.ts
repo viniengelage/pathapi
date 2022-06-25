@@ -1,3 +1,4 @@
+import { v2 as cloudinary } from "cloudinary";
 import { inject, injectable } from "tsyringe";
 
 import { ICreatePostDTO } from "@modules/posts/dtos/ICreatePostDTO";
@@ -33,7 +34,7 @@ class UpdatePostUseCase {
     }
 
     if (thumbnail && post.thumbnail) {
-      await deleteFile(`./tmp/thumbnail/${post.thumbnail}`);
+      await cloudinary.uploader.destroy(post.thumbnail);
     }
 
     post.title = title;

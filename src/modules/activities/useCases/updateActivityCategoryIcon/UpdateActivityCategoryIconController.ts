@@ -1,3 +1,4 @@
+import { v2 as cloudnary } from "cloudinary";
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
@@ -17,7 +18,9 @@ class UpdateActivityCategoryIconController {
       icon,
     });
 
-    return response.status(201).json(updatedActivityIcon);
+    const iconFile = cloudnary.image(updatedActivityIcon);
+
+    return response.status(201).send(iconFile);
   }
 }
 

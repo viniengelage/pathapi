@@ -1,5 +1,7 @@
+import { v2 as cloudinary } from "cloudinary";
 import { Router } from "express";
 import multer from "multer";
+import { CloudinaryStorage, Options } from "multer-storage-cloudinary";
 
 import uploadConfig from "@config/upload";
 import { CompleteUserChallengeController } from "@modules/challenges/useCases/completeUserChallenge/CompleteUserChallengeController";
@@ -16,9 +18,24 @@ import { UpdateChallengeIconController } from "@modules/challenges/useCases/upda
 import { ensureAuthenticated } from "@shared/infra/middlewares/ensureAuthenticated";
 import { is } from "@shared/infra/middlewares/permission";
 
+declare interface ICloudinaryOptions extends Options {
+  params: {
+    folder: string;
+  };
+}
+
+const storageOptions: ICloudinaryOptions = {
+  cloudinary,
+  params: {
+    folder: "challenges",
+  },
+};
+
 const challengesRoutes = Router();
 
-const uploadIcon = multer(uploadConfig.upload("./tmp/icons"));
+const storage = new CloudinaryStorage(storageOptions);
+
+const uploadIcon = multer({ storage });
 
 const createChallengeController = new CreateChallengeController();
 const updateChallengeIconController = new UpdateChallengeIconController();

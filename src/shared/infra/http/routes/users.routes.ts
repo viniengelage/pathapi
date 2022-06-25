@@ -1,7 +1,8 @@
+import { v2 as cloudinary } from "cloudinary";
 import { Router } from "express";
 import multer from "multer";
+import { CloudinaryStorage, Options } from "multer-storage-cloudinary";
 
-import uploadConfig from "@config/upload";
 import { DeleteUserController } from "@modules/users/useCases/deleteUser/DeleteUserController";
 import { ListUsersController } from "@modules/users/useCases/listUsers/ListUsersController";
 import { ShowUserController } from "@modules/users/useCases/showUser/ShowUserController";
@@ -13,9 +14,24 @@ import { UpdateUserPasswordController } from "@modules/users/useCases/updateUser
 import { ensureAuthenticated } from "@shared/infra/middlewares/ensureAuthenticated";
 import { is } from "@shared/infra/middlewares/permission";
 
+declare interface ICloudinaryOptions extends Options {
+  params: {
+    folder: string;
+  };
+}
+
+const storageOptions: ICloudinaryOptions = {
+  cloudinary,
+  params: {
+    folder: "avatars",
+  },
+};
+
 const usersRouter = Router();
 
-const uploadAvatar = multer(uploadConfig.upload("./tmp/avatar"));
+const storage = new CloudinaryStorage(storageOptions);
+
+const uploadAvatar = multer({ storage });
 
 const listUsersController = new ListUsersController();
 const updateUserController = new UpdateUserController();

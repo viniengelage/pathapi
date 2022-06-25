@@ -1,11 +1,11 @@
+import { v2 as cloudinary } from "cloudinary";
 import { Request, Response } from "express";
-import path from "path";
 import { container } from "tsyringe";
 
 import { ShowChallengeIconUseCase } from "./ShowChallengeIconUseCase";
 
 class ShowChallengeIconController {
-  async handle(request: Request, response: Response): Promise<void> {
+  async handle(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
     const showChallengeIconUseCase = container.resolve(
@@ -14,9 +14,9 @@ class ShowChallengeIconController {
 
     const icon = await showChallengeIconUseCase.execute(id);
 
-    const iconDir = path.resolve(__dirname, `../../../../../tmp/icons`);
+    const iconFile = cloudinary.image(icon);
 
-    return response.status(200).sendFile(`${iconDir}/${icon}`);
+    return response.status(200).send(iconFile);
   }
 }
 

@@ -57,7 +57,7 @@ class ActivitiesRepository implements IActivitiesRepository {
 
   async findById(id: string): Promise<Activity> {
     const activitiy = await this.repository.findOne(id, {
-      relations: ["activity_category_id"],
+      relations: ["activity_category"],
     });
 
     return activitiy;

@@ -1,3 +1,4 @@
+import { v2 as cloudinary } from "cloudinary";
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
@@ -12,12 +13,14 @@ class UpdateChallengeIconController {
       UpdateChallengeIconUseCase
     );
 
-    const upatedChallengeIcon = await updateChallengeIconUseCase.execute({
+    const upatedChallenge = await updateChallengeIconUseCase.execute({
       challenge_id,
       icon_file,
     });
 
-    return response.status(200).json(upatedChallengeIcon);
+    const icon = cloudinary.image(upatedChallenge.icon);
+
+    return response.status(200).send(icon);
   }
 }
 

@@ -1,3 +1,4 @@
+import { v2 as cloudinary } from "cloudinary";
 import { inject, injectable } from "tsyringe";
 
 import { IPostsRepository } from "@modules/posts/repositories/IPostsRepository";
@@ -17,7 +18,9 @@ class ShowPostThumbnailUseCase {
       throw new AppError("Post não encontrado");
     }
 
-    return post.thumbnail;
+    const thumbnail = cloudinary.image(post.thumbnail);
+
+    return thumbnail;
   }
 }
 

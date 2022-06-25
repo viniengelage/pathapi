@@ -30,11 +30,19 @@ class CreateChallengeUseCase {
 
     const challenges = await this.challengesRepository.findAll("DESC");
 
-    const isNextLevel = challenges[0].level === level - 1;
+    if (challenges.length > 0) {
+      const isNextLevel = challenges[0].level === level - 1;
 
-    if (!isNextLevel) {
+      if (!isNextLevel) {
+        throw new ValidationError({
+          level: `Nível incorreto, o pŕoximo nível é ${
+            challenges[0].level + 1
+          }`,
+        });
+      }
+    } else if (level !== 1) {
       throw new ValidationError({
-        level: `Level incorreto, o pŕoximo level é ${challenges[0].level + 1}`,
+        level: `O primeiro nível deve ser o 1`,
       });
     }
 
@@ -47,6 +55,8 @@ class CreateChallengeUseCase {
       level,
       icon,
     });
+
+    console.log("Hello");
 
     return challenge;
   }

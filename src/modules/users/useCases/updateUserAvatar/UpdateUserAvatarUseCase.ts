@@ -1,3 +1,4 @@
+import { v2 as cloudinary } from "cloudinary";
 import { inject, injectable } from "tsyringe";
 
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
@@ -19,7 +20,7 @@ class UpdateUserAvatarUseCase {
     const user = await this.usersRepository.findById(user_id);
 
     if (user.avatar) {
-      await deleteFile(`./tmp/avatar/${user.avatar}`);
+      await cloudinary.uploader.destroy(user.avatar);
     }
 
     user.avatar = avatar_file;

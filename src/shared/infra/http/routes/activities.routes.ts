@@ -1,5 +1,7 @@
+import { v2 as cloudinary } from "cloudinary";
 import { Router } from "express";
 import multer from "multer";
+import { CloudinaryStorage, Options } from "multer-storage-cloudinary";
 
 import uploadConfig from "@config/upload";
 import { CreateActivityController } from "@modules/activities/useCases/createActivity/CreateActivityController";
@@ -9,6 +11,7 @@ import { ListActivitiesController } from "@modules/activities/useCases/listActiv
 import { ListActivitiesCategoryController } from "@modules/activities/useCases/listActivitiesCategories/ListActivitiesCategoryController";
 import { ShowActivityController } from "@modules/activities/useCases/showActivity/ShowActivityController";
 import { ShowActivityCategoryController } from "@modules/activities/useCases/showActivityCategory/ShowActivityCategoryController";
+import { ShowActivityCategoryIconController } from "@modules/activities/useCases/showActivityCategoryIcon/ShowActivityCategoryIconController";
 import { ShowActivityIconController } from "@modules/activities/useCases/showActivityIcon/ShowActivityIconController";
 import { UpdateActivityController } from "@modules/activities/useCases/updateActivity/UpdateActivityController";
 import { UpdateActivityCategoryController } from "@modules/activities/useCases/updateActivityCategory/UpdateActivityCategoryController";
@@ -16,9 +19,24 @@ import { UpdateActivityIconController } from "@modules/activities/useCases/updat
 import { ensureAuthenticated } from "@shared/infra/middlewares/ensureAuthenticated";
 import { is } from "@shared/infra/middlewares/permission";
 
+declare interface ICloudinaryOptions extends Options {
+  params: {
+    folder: string;
+  };
+}
+
+const storageOptions: ICloudinaryOptions = {
+  cloudinary,
+  params: {
+    folder: "activities",
+  },
+};
+
 const activitiesRoutes = Router();
 
-const uploadIcon = multer(uploadConfig.upload("./tmp/icons"));
+const storage = new CloudinaryStorage(storageOptions);
+
+const uploadIcon = multer({ storage });
 
 const createActivityCategoryController = new CreateActivityCategoryController();
 const showActivityCategoryController = new ShowActivityCategoryController();
@@ -28,6 +46,8 @@ const listActivitiesCategoriesController =
   new ListActivitiesCategoryController();
 const updateActivityCategoryIconController = new UpdateActivityIconController();
 
+const showActivityActivityIconController =
+  new ShowActivityCategoryIconController();
 const createActivityController = new CreateActivityController();
 const showActivityController = new ShowActivityController();
 const listActivitiesController = new ListActivitiesController();
@@ -38,8 +58,12 @@ const updateActivityIconController = new UpdateActivityIconController();
 activitiesRoutes.get("/categories", listActivitiesCategoriesController.handle);
 activitiesRoutes.get("/categories/:id", showActivityCategoryController.handle);
 activitiesRoutes.get("/", listActivitiesController.handle);
+activitiesRoutes.get(
+  "/categories/:id/icon",
+  showActivityActivityIconController.handle
+);
 activitiesRoutes.get("/:id", showActivityController.handle);
-activitiesRoutes.get("/icons/:filename", showActivityIconController.handle);
+activitiesRoutes.get("/:id/icon", showActivityIconController.handle);
 
 activitiesRoutes.use(ensureAuthenticated);
 activitiesRoutes.use(is("admin"));

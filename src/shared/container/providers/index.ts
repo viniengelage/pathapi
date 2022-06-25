@@ -5,6 +5,7 @@ import { DayjsDateProvider } from "./DateProvider/implementations/DayjsDateProvi
 import { ValidationProvider } from "./implementations/ValidationProvider";
 import { IMailProvider } from "./MailProvider/IMailProvider";
 import { EtherealMailProvider } from "./MailProvider/implementations/EtherealMailProvider";
+import { GoogleMailProvider } from "./MailProvider/implementations/GoogleMailProvider";
 import { ExpoNotificationProvider } from "./NotificationProvider/implementations/ExpoNotificationProvider";
 import { INotificationProvider } from "./NotificationProvider/INotificationProvider";
 
@@ -16,6 +17,11 @@ container.registerSingleton<ValidationProvider>(
 container.registerInstance<IMailProvider>(
   "EtherealMailProvider",
   new EtherealMailProvider()
+);
+
+container.registerInstance<IMailProvider>(
+  "GoogleMailProvider",
+  new GoogleMailProvider()
 );
 
 container.registerSingleton<IDateProvider>(

@@ -13,6 +13,7 @@ import createConnection from "../typeorm";
 import { router } from "./routes";
 
 import "@shared/container";
+import "@config/cloudnary";
 
 dotenv.config();
 

@@ -1,14 +1,15 @@
-import { v2 as cloudnary } from "cloudinary";
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
-import { ShowActivityIconUseCase } from "./ShowActivityIconUseCase";
+import { ShowActivityCategoryIconUseCase } from "./ShowActivityCategoryIconUseCase";
 
-class ShowActivityIconController {
+class ShowActivityCategoryIconController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
-    const showActivityIconUseCase = container.resolve(ShowActivityIconUseCase);
+    const showActivityIconUseCase = container.resolve(
+      ShowActivityCategoryIconUseCase
+    );
 
     const icon = await showActivityIconUseCase.execute(id);
 
@@ -16,4 +17,4 @@ class ShowActivityIconController {
   }
 }
 
-export { ShowActivityIconController };
+export { ShowActivityCategoryIconController };

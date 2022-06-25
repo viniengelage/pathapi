@@ -1,8 +1,9 @@
+import { v2 as cloudinary } from "cloudinary";
 import { inject, injectable } from "tsyringe";
 
+import { Challenge } from "@modules/challenges/infra/typeorm/entities/Challenge";
 import { IChallengesRepository } from "@modules/challenges/repositories/IChallengesRepository";
 import { AppError } from "@shared/errors/AppError";
-import { deleteFile } from "@utils/file";
 
 interface IRequest {
   challenge_id: string;
@@ -16,7 +17,7 @@ class UpdateChallengeIconUseCase {
     private challengesRepository: IChallengesRepository
   ) {}
 
-  async execute({ challenge_id, icon_file }: IRequest) {
+  async execute({ challenge_id, icon_file }: IRequest): Promise<Challenge> {
     const challenge = await this.challengesRepository.findById(challenge_id);
 
     if (!challenge) {
@@ -24,12 +25,12 @@ class UpdateChallengeIconUseCase {
     }
 
     if (challenge.icon) {
-      await deleteFile(`./tmp/icons/${challenge.icon}`);
+      await cloudinary.uploader.destroy(challenge.icon);
     }
 
     challenge.icon = icon_file;
 
-    const updatedChallenge = this.challengesRepository.update(challenge);
+    const updatedChallenge = await this.challengesRepository.update(challenge);
 
     return updatedChallenge;
   }

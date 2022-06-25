@@ -1,3 +1,4 @@
+import { v2 as cloudnary } from "cloudinary";
 import { inject, injectable } from "tsyringe";
 
 import { ActivityCategory } from "@modules/activities/infra/typeorm/entities/ActivityCategory";
@@ -17,7 +18,7 @@ class UpdateActivityCategoryIconUseCase {
     private activitiesCategoriesRepository: IActivitiesCategoriesRepository
   ) {}
 
-  async execute({ activity_id, icon }: IRequest): Promise<ActivityCategory> {
+  async execute({ activity_id, icon }: IRequest): Promise<string> {
     const activity = await this.activitiesCategoriesRepository.findById(
       activity_id
     );
@@ -26,7 +27,7 @@ class UpdateActivityCategoryIconUseCase {
       throw new AppError("Atividade não encontrada");
     }
 
-    await deleteFile(`./tmp/icons/${activity.icon}`);
+    cloudnary.uploader.destroy(activity.icon);
 
     activity.icon = icon;
 
@@ -34,7 +35,7 @@ class UpdateActivityCategoryIconUseCase {
       activity
     );
 
-    return updatedActivity;
+    return updatedActivity.icon;
   }
 }
 

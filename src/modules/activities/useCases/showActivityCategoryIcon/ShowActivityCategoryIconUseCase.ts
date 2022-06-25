@@ -1,21 +1,18 @@
 import { v2 as cloudnary } from "cloudinary";
 import { inject, injectable } from "tsyringe";
 
-import { IActivitiesRepository } from "@modules/activities/repositories/IActivitiesRepository";
+import { IActivitiesCategoriesRepository } from "@modules/activities/repositories/IActivitiesCategoriesRepository";
 import { AppError } from "@shared/errors/AppError";
 
 @injectable()
-class ShowActivityIconUseCase {
+class ShowActivityCategoryIconUseCase {
   constructor(
-    @inject("ActivitiesRepository")
-    private activitiesRepository: IActivitiesRepository
+    @inject("ActivitiesCategoriesRepository")
+    private activitiesCategpories: IActivitiesCategoriesRepository
   ) {}
 
   async execute(id: string): Promise<string> {
-    console.log("Veio aqui");
-    const activity = await this.activitiesRepository.findById(id);
-
-    console.log(activity);
+    const activity = await this.activitiesCategpories.findById(id);
 
     if (!activity) {
       throw new AppError("Atividade não encontrada");
@@ -27,4 +24,4 @@ class ShowActivityIconUseCase {
   }
 }
 
-export { ShowActivityIconUseCase };
+export { ShowActivityCategoryIconUseCase };
