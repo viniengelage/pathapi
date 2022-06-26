@@ -41,7 +41,7 @@ class UpdateUserPasswordController {
       return response.status(200).send();
     } catch (error) {
       if (error instanceof ValidationError) {
-        return response.status(422).json(error.errors);
+        return response.status(422).json(error);
       }
 
       const errors = getValidationErrors(error);
