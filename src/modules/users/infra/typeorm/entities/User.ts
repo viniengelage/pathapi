@@ -1,3 +1,4 @@
+import { v2 as cloudinary } from "cloudinary";
 import {
   Entity,
   Column,
@@ -6,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
   ManyToMany,
   JoinTable,
+  AfterLoad,
 } from "typeorm";
 
 import { Activity } from "@modules/activities/infra/typeorm/entities/Activity";
@@ -25,6 +27,8 @@ export enum UserRole {
 
 @Entity("users")
 class User {
+  private avatar_url: string;
+
   @PrimaryGeneratedColumn("uuid")
   id?: string;
 
@@ -95,6 +99,11 @@ class User {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @AfterLoad()
+  getAvatarUrl() {
+    this.avatar_url = cloudinary.url(this.avatar);
+  }
 }
 
 export { User };
