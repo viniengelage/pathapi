@@ -18,7 +18,7 @@ class ShowPostThumbnailUseCase {
       throw new AppError("Post não encontrado");
     }
 
-    const thumbnail = cloudinary.image(post.thumbnail);
+    const thumbnail = cloudinary.url(post.thumbnail);
 
     return thumbnail;
   }

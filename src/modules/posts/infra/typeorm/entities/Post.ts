@@ -1,3 +1,4 @@
+import { v2 as cloudinary } from "cloudinary";
 import {
   AfterLoad,
   Column,
@@ -48,7 +49,7 @@ class Post {
 
   @AfterLoad()
   private getUrl() {
-    this.thumbnail_url = `${process.env.APP_HOST}:${process.env.APP_PORT}/posts/${this.id}/thumbnail`;
+    this.thumbnail_url = cloudinary.url(this.thumbnail);
   }
 }
 
