@@ -83,6 +83,8 @@ export default {
             userLastedCompletedLevel.challenge.level
           );
 
+          console.log(nextLevel);
+
           await userChallengesRepository.create({
             user_id: user.id,
             challenge_id: nextLevel.id,
