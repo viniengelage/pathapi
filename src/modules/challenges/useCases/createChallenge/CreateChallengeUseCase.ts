@@ -56,8 +56,6 @@ class CreateChallengeUseCase {
       icon,
     });
 
-    console.log("Hello");
-
     return challenge;
   }
 }

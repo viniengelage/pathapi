@@ -9,7 +9,7 @@ const bree = new Bree({
   jobs: [
     {
       name: "CreateUserChallenge",
-      cron: "0 */1 * * *",
+      cron: "* * * * *",
       worker: {
         workerData: {
           time: new Date(),

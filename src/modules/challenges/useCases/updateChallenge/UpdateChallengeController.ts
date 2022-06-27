@@ -6,7 +6,7 @@ import { UpdateChallengeUseCase } from "./UpdateChallengeUseCase";
 class UpdateChallengeController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
-    const { title, description, content, earned_points, see_more_url } =
+    const { title, description, content, earned_points, see_more_url, level } =
       request.body;
 
     const updateChallengeUseCase = container.resolve(UpdateChallengeUseCase);
@@ -18,6 +18,7 @@ class UpdateChallengeController {
       content,
       earned_points,
       see_more_url,
+      level,
     });
 
     return response.status(200).json(updatedChallenge);

@@ -3,12 +3,18 @@ import { userChallengeQueue } from "@shared/infra/queue";
 
 import CreateUserChallenge from "../queue/jobs/CreateUserChallenge";
 
-userChallengeQueue.process((job, done) => {
+import "@config/cloudnary";
+
+userChallengeQueue.process(async (job, done) => {
   const { time } = job.data;
 
-  CreateUserChallenge.handle({
-    time,
-  });
+  try {
+    await CreateUserChallenge.handle({
+      time,
+    });
+  } catch (error) {
+    console.log(error);
+  }
 
   done();
 });

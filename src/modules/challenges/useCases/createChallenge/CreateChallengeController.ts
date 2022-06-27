@@ -14,8 +14,6 @@ class CreateChallengeController {
 
     const icon = request.file?.filename;
 
-    console.log(level);
-
     const challenge = {
       title,
       description,

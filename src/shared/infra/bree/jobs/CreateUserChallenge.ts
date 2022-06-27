@@ -5,9 +5,7 @@ import { userChallengeQueue } from "@shared/infra/queue";
 const handle = async () => {
   const { time } = workerData;
 
-  await userChallengeQueue.add({ time });
-
-  process.exit(0);
+  userChallengeQueue.add({ time }).then(() => process.exit(0));
 };
 
 handle();
