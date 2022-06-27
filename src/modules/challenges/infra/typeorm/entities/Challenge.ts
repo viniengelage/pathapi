@@ -1,3 +1,4 @@
+import { v2 as cloudinary } from "cloudinary";
 import {
   AfterLoad,
   Column,
@@ -43,7 +44,7 @@ class Challenge {
 
   @AfterLoad()
   getUrl() {
-    this.icon_url = `${process.env.APP_HOST}:${process.env.APP_PORT}/challenges/${this.id}/icon`;
+    this.icon_url = cloudinary.url(this.icon);
   }
 }
 
