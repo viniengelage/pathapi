@@ -48,24 +48,37 @@ export default {
       );
 
       await map(users, async (user) => {
+        console.log("Sou um user", user.id);
         const hasIncompletedChallenge =
           await userChallengesRepository.findIncompletedChallenge(user.id);
+
+        console.log("Passei por aqui");
+
         if (hasIncompletedChallenge) {
           return;
         }
+
+        console.log("Passei por aqui 2");
+
         const userLastedCompletedLevel =
           await userChallengesRepository.findByLastedCompletedLevel(user.id);
 
+        console.log("Passei por aqui 3");
+
         if (!userLastedCompletedLevel) {
+          console.log("Entrei aqui 1");
           const level1Challenge = await challengesRepository.findByLevel(1);
 
           if (level1Challenge) {
+            console.log("Entrei aqui 1.2");
             await userChallengesRepository.create({
               user_id: user.id,
               challenge_id: level1Challenge.id,
             });
           }
         } else {
+          console.log("Entrei aqui 2");
+
           const nextLevel = await challengesRepository.findNextLevel(
             userLastedCompletedLevel.challenge.level
           );
