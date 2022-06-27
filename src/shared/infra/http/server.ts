@@ -8,7 +8,7 @@ import { setLocale } from "yup";
 import { AppError } from "@shared/errors/AppError";
 import { ValidationError } from "@shared/errors/ValidationError";
 import { bree } from "@shared/infra/bree";
-// import { userChallengeQueue } from "@shared/infra/queue";
+import { userChallengeQueue } from "@shared/infra/queue";
 
 import createConnection from "../typeorm";
 import { router } from "./routes";
@@ -44,7 +44,7 @@ app.use(router);
 // app.use("/images", express.static("public"));
 // app.use("/avatars", express.static("../../../../tmp/avatar"));
 
-// userChallengeQueue.add({});
+userChallengeQueue.add({});
 
 // app.use("/test", () => {
 //   userChallengeQueue.add({});
