@@ -25,11 +25,13 @@ class UpdatePostUseCase {
   }: ICreatePostDTO): Promise<Post> {
     const post = await this.postsRepository.findById(id);
 
+    console.log(id, user_id);
+
     if (!post) {
       throw new AppError("Post não encontrado");
     }
 
-    if (user_id !== post.user.id) {
+    if (user_id !== post.user_id) {
       throw new AppError("Esse post não é seu!");
     }
 
