@@ -58,6 +58,8 @@ export default {
         const userLastedCompletedLevel =
           await userChallengesRepository.findByLastedCompletedLevel(user.id);
 
+        console.log(userLastedCompletedLevel, user.email);
+
         if (!userLastedCompletedLevel) {
           const level1Challenge = await challengesRepository.findByLevel(1);
 
